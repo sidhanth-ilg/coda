@@ -7,7 +7,7 @@ const searchTerm = ref('')
 const currentPage = ref(1)
 const itemsPerPage = ref(2) // Number of items to display per page
 
-const useProductsList = () => {
+const usePaginatedProductsList = () => {
   const productsStore = useProductsStore()
   const products = storeToRefs(productsStore).getProducts
 
@@ -74,4 +74,4 @@ const useProductsList = () => {
   }
 }
 
-export default useProductsList
+export default usePaginatedProductsList
