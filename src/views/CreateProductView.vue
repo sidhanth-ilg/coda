@@ -2,6 +2,7 @@
 import type { Product } from '@/types/product'
 import { ref } from 'vue'
 import { useProductsStore } from '@/stores/products'
+import CodaInput from '@/components/common/CodaInput.vue'
 
 const { addProduct, getProducts } = useProductsStore()
 
@@ -53,61 +54,109 @@ const createProduct = () => {
   <div class="create-product-view">
     <h1>Create Product</h1>
     <form>
-      <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" v-model="newProduct.name" />
-      </div>
-      <div>
-        <label for="productTagline">Product Tagline:</label>
-        <input type="text" id="productTagline" v-model="newProduct.productTagline" />
-      </div>
-      <div>
-        <label for="shortDescription">Short Description:</label>
-        <input type="text" id="shortDescription" v-model="newProduct.shortDescription" />
-      </div>
-      <div>
-        <label for="longDescription">Long Description:</label>
-        <textarea id="longDescription" v-model="newProduct.longDescription"></textarea>
-      </div>
-      <div>
-        <label for="logoLocation">Logo Location:</label>
-        <input type="text" id="logoLocation" v-model="newProduct.logoLocation" />
-      </div>
-      <div>
-        <label for="productUrl">Product URL:</label>
-        <input type="text" id="productUrl" v-model="newProduct.productUrl" />
-      </div>
-      <div>
-        <label for="voucherTypeName">Voucher Type Name:</label>
-        <input type="text" id="voucherTypeName" v-model="newProduct.voucherTypeName" />
-      </div>
-      <div>
-        <label for="orderUrl">Order URL:</label>
-        <input type="text" id="orderUrl" v-model="newProduct.orderUrl" />
-      </div>
-      <div>
-        <label for="productTitle">Product Title:</label>
-        <input type="text" id="productTitle" v-model="newProduct.productTitle" />
-      </div>
-      <div>
-        <label for="variableDenomPriceMinAmount">Variable Denom Price Min Amount:</label>
-        <input
-          type="number"
-          id="variableDenomPriceMinAmount"
-          v-model.number="newProduct.variableDenomPriceMinAmount"
-        />
-      </div>
-      <div>
-        <label for="variableDenomPriceMaxAmount">Variable Denom Price Max Amount:</label>
-        <input
-          type="number"
-          id="variableDenomPriceMaxAmount"
-          v-model.number="newProduct.variableDenomPriceMaxAmount"
-        />
-      </div>
+      <CodaInput
+        label="Name"
+        type="text"
+        id="name"
+        placeholder="Enter product name"
+        v-model="newProduct.name"
+      />
+      <CodaInput
+        label="Product Tagline"
+        type="text"
+        id="productTagline"
+        placeholder="Enter product tagline"
+        v-model="newProduct.productTagline"
+      />
+      <CodaInput
+        label="Short Description"
+        type="text"
+        id="shortDescription"
+        placeholder="Enter a short description"
+        v-model="newProduct.shortDescription"
+      />
+      <CodaInput
+        label="Long Description"
+        type="textarea"
+        id="longDescription"
+        placeholder="Enter detailed product description"
+        v-model="newProduct.longDescription"
+      />
+      <CodaInput
+        label="Logo Location"
+        type="text"
+        id="logoLocation"
+        placeholder="Enter logo URL or path"
+        v-model="newProduct.logoLocation"
+      />
+      <CodaInput
+        label="Product URL"
+        type="text"
+        id="productUrl"
+        placeholder="Enter product website URL"
+        v-model="newProduct.productUrl"
+      />
+      <CodaInput
+        label="Voucher Type Name"
+        type="text"
+        id="voucherTypeName"
+        placeholder="Enter voucher type"
+        v-model="newProduct.voucherTypeName"
+      />
+      <CodaInput
+        label="Order URL"
+        type="text"
+        id="orderUrl"
+        placeholder="Enter order page URL"
+        v-model="newProduct.orderUrl"
+      />
+      <CodaInput
+        label="Product Title"
+        type="text"
+        id="productTitle"
+        placeholder="Enter product title"
+        v-model="newProduct.productTitle"
+      />
+      <CodaInput
+        label="Variable Denom Price Min Amount"
+        type="number"
+        id="variableDenomPriceMinAmount"
+        placeholder="Enter minimum price"
+        v-model.number="newProduct.variableDenomPriceMinAmount"
+      />
+      <CodaInput
+        label="Variable Denom Price Max Amount"
+        type="number"
+        id="variableDenomPriceMaxAmount"
+        placeholder="Enter maximum price"
+        v-model.number="newProduct.variableDenomPriceMaxAmount"
+      />
 
       <!-- Add a submit button -->
-      <button type="submit" @click.prevent="createProduct">Create Product</button>
+      <button class="create-product-view__submit" type="submit" @click.prevent="createProduct">
+        Create Product
+      </button>
     </form>
   </div>
 </template>
+<style scoped>
+.create-product-view {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 4rem;
+}
+
+.create-product-view__submit {
+  background-color: #4a5568;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+</style>

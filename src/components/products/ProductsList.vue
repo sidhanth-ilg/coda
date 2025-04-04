@@ -5,18 +5,19 @@ import { useVirtualList } from '@vueuse/core'
 
 const { products } = useProductsList()
 
-const { list, containerProps, wrapperProps } = useVirtualList(products, {
-  itemHeight: 384,
-  overscan: 5,
-})
+// const { list, containerProps, wrapperProps } = useVirtualList(products, {
+//   itemHeight: 384,
+//   overscan: 5,
+// })
 </script>
 
 <template>
-  <div v-bind="containerProps" class="virtual-list-container">
+  <!-- <div v-bind="containerProps" class="virtual-list-container">
     <div v-bind="wrapperProps">
       <ProductItem v-for="item in list" :key="item.data.id" :product="item.data" />
     </div>
-  </div>
+  </div> -->
+  <ProductItem v-for="product in products" :key="product.id" :product="product" />
 </template>
 <style scoped>
 .virtual-list-container {

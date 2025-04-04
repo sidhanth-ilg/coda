@@ -36,8 +36,9 @@ const onProductClicked = (id: number) => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
   padding: 1rem;
-  margin: 1rem;
+  margin-bottom: 1rem;
   border-radius: 8px;
   border-color: white;
   border: 1px solid white;
