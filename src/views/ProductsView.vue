@@ -30,7 +30,7 @@ watch(debouncedSearchTerm, (newValue) => {
           placeholder="Search..."
           v-model="debouncedSearchTerm"
         />
-        <button class="products-view__clear" @click="onClearClicked">Clear</button>
+        <button class="products-view__clear-button" @click="onClearClicked">Clear</button>
       </div>
       <button
         class="products-view__create-button"
@@ -65,7 +65,7 @@ watch(debouncedSearchTerm, (newValue) => {
   width: 70%;
 }
 
-.products-view__clear {
+.products-view__clear-button {
   background-color: #f44336;
   color: white;
   border: none;
@@ -95,9 +95,25 @@ input {
 }
 
 @media screen and (max-width: 768px) {
+  .products-view {
+    padding: 0;
+  }
   .products-view__header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .products-view__search {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .products-view__clear-button {
+    width: 100%;
+    margin: 0;
+    margin-top: 1rem;
   }
   .products-view__create-button {
     margin-top: 1rem;

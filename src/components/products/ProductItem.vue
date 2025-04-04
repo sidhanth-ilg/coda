@@ -43,7 +43,8 @@ const onProductClicked = (id: number) => {
   border-color: white;
   border: 1px solid white;
   color: white;
-  height: 24rem;
+  /*  min-height needs to be made heigh if want virtual list */
+  min-height: 24rem;
   position: relative;
 }
 
