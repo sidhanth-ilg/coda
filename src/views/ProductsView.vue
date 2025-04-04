@@ -6,6 +6,11 @@ import { ref, watch } from 'vue'
 const { searchTerm } = useProductsList()
 const debouncedSearchTerm = ref('')
 
+const onClearClicked = (): void => {
+  debouncedSearchTerm.value = ''
+  searchTerm.value = ''
+}
+
 let timeout: ReturnType<typeof setTimeout>
 watch(debouncedSearchTerm, (newValue) => {
   clearTimeout(timeout)
@@ -18,12 +23,15 @@ watch(debouncedSearchTerm, (newValue) => {
 <template>
   <div class="products-view">
     <div class="products-view__header">
-      <input
-        data-testid="search-input"
-        type="text"
-        placeholder="Search..."
-        v-model="debouncedSearchTerm"
-      />
+      <div class="products-view__search">
+        <input
+          data-testid="search-input"
+          type="text"
+          placeholder="Search..."
+          v-model="debouncedSearchTerm"
+        />
+        <button class="products-view__clear" @click="onClearClicked">Clear</button>
+      </div>
       <button
         class="products-view__create-button"
         @click="$router.push({ name: 'create-product' })"
@@ -48,7 +56,25 @@ watch(debouncedSearchTerm, (newValue) => {
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.products-view__search {
+  display: flex;
+  align-items: center;
+  width: 70%;
+}
+
+.products-view__clear {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  height: 2rem;
+  margin-left: 1rem;
 }
 
 .products-view__create-button {
