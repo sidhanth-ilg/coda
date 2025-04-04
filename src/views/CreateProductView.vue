@@ -23,8 +23,16 @@ const newProduct = ref<Product>({
 })
 
 const createProduct = () => {
-  // Validate the new product data
-  if (!newProduct.value.name || !newProduct.value.productTagline) {
+  if (
+    !newProduct.value.name ||
+    !newProduct.value.productTagline ||
+    !newProduct.value.shortDescription ||
+    !newProduct.value.longDescription ||
+    !newProduct.value.productUrl ||
+    !newProduct.value.voucherTypeName ||
+    !newProduct.value.orderUrl ||
+    !newProduct.value.productTitle
+  ) {
     alert('Please fill in all required fields.')
     return
   }
