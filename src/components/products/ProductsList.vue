@@ -17,7 +17,9 @@ const { products } = useProductsList()
       <ProductItem v-for="item in list" :key="item.data.id" :product="item.data" />
     </div>
   </div> -->
-  <ProductItem v-for="product in products" :key="product.id" :product="product" />
+  <div data-testid="product-list">
+    <ProductItem v-for="product in products" :key="product.id" :product="product" />
+  </div>
 </template>
 <style scoped>
 .virtual-list-container {

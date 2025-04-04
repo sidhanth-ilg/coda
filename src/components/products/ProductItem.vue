@@ -19,10 +19,10 @@ const onProductClicked = (id: number) => {
 </script>
 
 <template>
-  <div class="product-item">
-    <h2>{{ product.name }}</h2>
+  <div class="product-item" :data-testid="`product-item-${product.id}`">
+    <h2 :data-testid="`product-item-${product.id}-name`">{{ product.name }}</h2>
     <p v-html="sanitizeHtml(product.shortDescription)"></p>
-    <p>{{ product.productTitle }}</p>
+    <p :data-testid="`product-item-${product.id}-title`">{{ product.productTitle }}</p>
 
     <button class="product-item__view-button" @click="onProductClicked(product.id)">
       View Product

@@ -18,7 +18,12 @@ watch(debouncedSearchTerm, (newValue) => {
 <template>
   <div class="products-view">
     <div class="products-view__header">
-      <input type="text" placeholder="Search..." v-model="debouncedSearchTerm" />
+      <input
+        data-testid="search-input"
+        type="text"
+        placeholder="Search..."
+        v-model="debouncedSearchTerm"
+      />
       <button
         class="products-view__create-button"
         @click="$router.push({ name: 'create-product' })"
