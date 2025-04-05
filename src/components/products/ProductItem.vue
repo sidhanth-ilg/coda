@@ -32,6 +32,7 @@ const testIds = computed(() => ({
   name: `product-item-${props.product.id}-name`,
   title: `product-item-${props.product.id}-title`,
   viewButton: `product-item-${props.product.id}-view-button`,
+  editButton: `product-item-${props.product.id}-edit-button`,
 }))
 </script>
 
@@ -49,7 +50,7 @@ const testIds = computed(() => ({
       >
         View Product
       </CodaButton>
-      <CodaButton @click="onEditProductClicked(product.id)" :data-testid="testIds.viewButton">
+      <CodaButton @click="onEditProductClicked(product.id)" :data-testid="testIds.editButton">
         Edit Product
       </CodaButton>
     </div>

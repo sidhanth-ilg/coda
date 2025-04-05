@@ -30,6 +30,13 @@ const copyVoucherCode = () => {
     })
   }
 }
+
+const testIds = computed(() => ({
+  container: `product-detail-view-${product.value?.id}`,
+  image: `product-detail-view-${product.value?.id}-image`,
+  orderButton: `product-detail-view-${product.value?.id}-order-button`,
+  voucherCode: `product-detail-view-${product.value?.id}-voucher-code`,
+}))
 </script>
 <template>
   <div class="product-detail-view">
@@ -38,6 +45,7 @@ const copyVoucherCode = () => {
       class="product-detail-view__image-banner"
       :src="product?.logoLocation"
       alt="Product Logo"
+      :data-testid="testIds.image"
     />
     <h1>{{ product?.name }}</h1>
     <p class="product-detail-view__long-description" v-html="product?.longDescription"></p>
@@ -49,6 +57,7 @@ const copyVoucherCode = () => {
       type="primary"
       class="product-detail-view__order-button"
       :disabled="!product?.orderUrl"
+      :data-testid="testIds.orderButton"
       @click="onOrderNowClicked"
     >
       Order Now
@@ -56,7 +65,11 @@ const copyVoucherCode = () => {
 
     <div>
       Use discount voucher code:
-      <div @click="copyVoucherCode" class="product-detail-view__voucher-code">
+      <div
+        :data-testid="testIds.voucherCode"
+        @click="copyVoucherCode"
+        class="product-detail-view__voucher-code"
+      >
         {{ product?.voucherTypeName }}
       </div>
     </div>
