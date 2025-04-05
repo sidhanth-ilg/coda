@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Product } from '@/types/product'
 import { useRouter } from 'vue-router'
+import { computed } from 'vue'
 import { sanitizeHtml } from '@/utilities/util'
 import CodaButton from '@/components/common/CodaButton.vue'
 
@@ -10,25 +11,32 @@ type Props = {
   product: Pick<Product, 'id' | 'name' | 'shortDescription' | 'productTitle'>
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 const onProductClicked = (id: number) => {
   router.push({
     name: 'product-detail',
     params: { id },
   })
 }
+
+const testIds = computed(() => ({
+  container: `product-item-${props.product.id}`,
+  name: `product-item-${props.product.id}-name`,
+  title: `product-item-${props.product.id}-title`,
+  viewButton: `product-item-${props.product.id}-view-button`,
+}))
 </script>
 
 <template>
-  <div class="product-item" :data-testid="`product-item-${product.id}`">
-    <h2 :data-testid="`product-item-${product.id}-name`">{{ product.name }}</h2>
+  <div class="product-item" :data-testid="testIds.container">
+    <h2 :data-testid="testIds.name">{{ product.name }}</h2>
     <p v-html="sanitizeHtml(product.shortDescription)"></p>
-    <p :data-testid="`product-item-${product.id}-title`">{{ product.productTitle }}</p>
+    <p :data-testid="testIds.title">{{ product.productTitle }}</p>
 
     <CodaButton
       class="product-item__view-button"
       @click="onProductClicked(product.id)"
-      :data-testid="`product-item-${product.id}-view-button`"
+      :data-testid="testIds.viewButton"
     >
       View Product
     </CodaButton>
