@@ -19,6 +19,14 @@ const onProductClicked = (id: number) => {
   })
 }
 
+const onEditProductClicked = (id: number) => {
+  router.push({
+    name: 'create-product',
+    params: { id },
+    query: { edit: 'true', id },
+  })
+}
+
 const testIds = computed(() => ({
   container: `product-item-${props.product.id}`,
   name: `product-item-${props.product.id}-name`,
@@ -33,13 +41,18 @@ const testIds = computed(() => ({
     <p v-html="sanitizeHtml(product.shortDescription)"></p>
     <p :data-testid="testIds.title">{{ product.productTitle }}</p>
 
-    <CodaButton
-      class="product-item__view-button"
-      @click="onProductClicked(product.id)"
-      :data-testid="testIds.viewButton"
-    >
-      View Product
-    </CodaButton>
+    <div class="product-item__button-container">
+      <CodaButton
+        class="product-item__view-button"
+        @click="onProductClicked(product.id)"
+        :data-testid="testIds.viewButton"
+      >
+        View Product
+      </CodaButton>
+      <CodaButton @click="onEditProductClicked(product.id)" :data-testid="testIds.viewButton">
+        Edit Product
+      </CodaButton>
+    </div>
   </div>
 </template>
 
@@ -61,10 +74,14 @@ const testIds = computed(() => ({
   position: relative;
 }
 
-.product-item__view-button {
+.product-item__button-container {
   position: absolute;
   right: 1rem;
   bottom: 1rem;
+}
+
+.product-item__view-button {
+  margin-right: 1rem;
 }
 
 @media screen and (max-width: 768px) {
@@ -74,7 +91,7 @@ const testIds = computed(() => ({
     border-radius: 0;
     height: auto;
   }
-  .product-item__view-button {
+  .product-item__button-container {
     position: static;
     float: none;
     width: 100%;

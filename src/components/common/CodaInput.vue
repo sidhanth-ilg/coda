@@ -1,13 +1,14 @@
 //generic input components
 
 <script setup lang="ts">
-const model = defineModel()
+const model = defineModel<string | number | null>()
 
 type Props = {
   label: string
   type: string
   placeholder: string
   error?: boolean
+  isTextarea?: boolean
 }
 const props = defineProps<Props>()
 </script>
@@ -16,7 +17,15 @@ const props = defineProps<Props>()
   <label :for="label" class="coda-input-label">
     {{ label }}
   </label>
+  <textarea
+    v-if="isTextarea"
+    v-model="model"
+    :id="label"
+    :placeholder="placeholder"
+    class="coda-input__input coda-input__input-textarea"
+  ></textarea>
   <input
+    v-else
     :id="label"
     :type="type"
     :placeholder="placeholder"
@@ -38,5 +47,9 @@ const props = defineProps<Props>()
   font-size: 16px;
   color: #2d3748;
   margin-bottom: 1rem;
+}
+
+.coda-input__input-textarea {
+  height: 12rem;
 }
 </style>

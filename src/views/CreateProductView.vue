@@ -1,67 +1,78 @@
 <script setup lang="ts">
 import type { Product } from '@/types/product'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useProductsStore } from '@/stores/products'
+import { useRoute, useRouter } from 'vue-router'
 import CodaInput from '@/components/common/CodaInput.vue'
 import CodaButton from '@/components/common/CodaButton.vue'
 
-const { addProduct, getProducts } = useProductsStore()
+const route = useRoute()
+const router = useRouter()
+const { addProduct, getProducts, updateProduct, getProductById } = useProductsStore()
+
+// Check if we're in edit mode
+const isEditMode = ref(route.query.edit === 'true')
+const productId = ref(route.query.id ? parseInt(route.query.id as string, 10) : null)
 
 const newProduct = ref<Product>({
-  name: 'sample name',
-  productTagline: 'sample tagline',
-  shortDescription: 'sample short description',
-  longDescription: 'sample long description',
-  logoLocation: 'https://cdn1.codashop.com/S/content/common/images/mno/lordsmobile_640x241.jpeg',
-  productUrl: 'https://www.codashop.com/',
-  voucherTypeName: 'MAX_DISCOUNT',
-  orderUrl: 'www.codashop.com',
-  productTitle: 'Sample Product Title',
+  name: 'Sample Product',
+  productTagline: 'Sample Tagline',
+  shortDescription: 'Sample short description',
+  longDescription: 'Sample long description',
+  logoLocation: 'https://example.com/logo.png',
+  productUrl: 'https://example.com/logo.png',
+  voucherTypeName: 'MAX_VOUCHER',
+  orderUrl: 'https://example.com/logo.png',
+  productTitle: 'https://example.com/logo.png',
   variableDenomPriceMinAmount: '20',
-  variableDenomPriceMaxAmount: '40',
+  variableDenomPriceMaxAmount: '30',
   gvtId: 0,
   id: getProducts.length + 1, // Incremental ID for simplicity
 })
 
-const createProduct = () => {
-  if (
-    !newProduct.value.name ||
-    !newProduct.value.productTagline ||
-    !newProduct.value.shortDescription ||
-    !newProduct.value.longDescription ||
-    !newProduct.value.productUrl ||
-    !newProduct.value.voucherTypeName ||
-    !newProduct.value.orderUrl ||
-    !newProduct.value.productTitle
-  ) {
+// Load product data if in edit mode
+onMounted(() => {
+  if (isEditMode.value && productId.value) {
+    try {
+      const product = getProductById(productId.value)
+      newProduct.value = { ...product }
+    } catch (error) {
+      console.error('Error loading product:', error)
+      alert('Product not found')
+      router.push({ name: 'products' })
+    }
+  }
+})
+
+const handleSubmit = () => {
+  // Validate the product data
+  if (!newProduct.value.name || !newProduct.value.productTagline) {
     alert('Please fill in all required fields.')
     return
   }
 
-  // Add the new product to the store
-  addProduct(newProduct.value)
+  try {
+    if (isEditMode.value && productId.value) {
+      // Update existing product
+      updateProduct(productId.value, newProduct.value)
+      alert('Product updated successfully!')
+    } else {
+      // Add new product
+      addProduct(newProduct.value)
+      alert('Product created successfully!')
+    }
 
-  // Reset the form
-  newProduct.value = {
-    name: '',
-    productTagline: '',
-    shortDescription: '',
-    longDescription: '',
-    logoLocation: '',
-    productUrl: '',
-    voucherTypeName: '',
-    orderUrl: '',
-    productTitle: '',
-    variableDenomPriceMinAmount: '',
-    variableDenomPriceMaxAmount: '',
-    gvtId: 0,
-    id: getProducts.values.length, // Incremental ID for simplicity
+    // Redirect back to products list
+    router.push({ name: 'products' })
+  } catch (error) {
+    console.error('Error saving product:', error)
+    alert(`Failed to ${isEditMode.value ? 'update' : 'create'} product.`)
   }
 }
 </script>
 <template>
   <div class="create-product-view">
-    <h1>Create Product</h1>
+    <h1>{{ isEditMode ? 'Edit Product' : 'Create Product' }}</h1>
     <div>
       <CodaInput
         label="Name"
@@ -70,6 +81,7 @@ const createProduct = () => {
         placeholder="Enter product name"
         v-model="newProduct.name"
       />
+
       <CodaInput
         label="Product Tagline"
         type="text"
@@ -77,20 +89,25 @@ const createProduct = () => {
         placeholder="Enter product tagline"
         v-model="newProduct.productTagline"
       />
+
       <CodaInput
         label="Short Description"
         type="text"
         id="shortDescription"
         placeholder="Enter a short description"
         v-model="newProduct.shortDescription"
+        is-textarea
       />
+
       <CodaInput
         label="Long Description"
         type="textarea"
         id="longDescription"
         placeholder="Enter detailed product description"
         v-model="newProduct.longDescription"
+        is-textarea
       />
+
       <CodaInput
         label="Logo Location"
         type="text"
@@ -98,6 +115,7 @@ const createProduct = () => {
         placeholder="Enter logo URL or path"
         v-model="newProduct.logoLocation"
       />
+
       <CodaInput
         label="Product URL"
         type="text"
@@ -105,6 +123,7 @@ const createProduct = () => {
         placeholder="Enter product website URL"
         v-model="newProduct.productUrl"
       />
+
       <CodaInput
         label="Voucher Type Name"
         type="text"
@@ -112,6 +131,7 @@ const createProduct = () => {
         placeholder="Enter voucher type"
         v-model="newProduct.voucherTypeName"
       />
+
       <CodaInput
         label="Order URL"
         type="text"
@@ -119,6 +139,7 @@ const createProduct = () => {
         placeholder="Enter order page URL"
         v-model="newProduct.orderUrl"
       />
+
       <CodaInput
         label="Product Title"
         type="text"
@@ -126,6 +147,7 @@ const createProduct = () => {
         placeholder="Enter product title"
         v-model="newProduct.productTitle"
       />
+
       <CodaInput
         label="Variable Denom Price Min Amount"
         type="number"
@@ -133,6 +155,7 @@ const createProduct = () => {
         placeholder="Enter minimum price"
         v-model.number="newProduct.variableDenomPriceMinAmount"
       />
+
       <CodaInput
         label="Variable Denom Price Max Amount"
         type="number"
@@ -141,20 +164,31 @@ const createProduct = () => {
         v-model.number="newProduct.variableDenomPriceMaxAmount"
       />
 
-      <!-- Add a submit button -->
-      <CodaButton type="primary" @click="createProduct" data-testid="create-product-button">
-        Create Product
+      <!-- Update button text based on mode -->
+      <CodaButton
+        type="primary"
+        @click="handleSubmit"
+        :data-testid="isEditMode ? 'update-product-button' : 'create-product-button'"
+        class="create-product-view__submit-button"
+      >
+        {{ isEditMode ? 'Update Product' : 'Create Product' }}
       </CodaButton>
     </div>
   </div>
 </template>
 <style scoped>
 .create-product-view {
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding-bottom: 4rem;
+}
+.create-product-view h1 {
+  margin-bottom: 20px;
+}
+.create-product-view form {
+  display: flex;
+  flex-direction: column;
 }
 </style>
