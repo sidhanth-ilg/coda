@@ -19,7 +19,7 @@ const newProduct = ref<Product>({
   productTagline: 'Sample Tagline',
   shortDescription: 'Sample short description',
   longDescription: 'Sample long description',
-  logoLocation: 'https://example.com/logo.png',
+  logoLocation: 'https://cdn1.codashop.com/S/content/common/images/mno/lordsmobile_640x241.jpeg',
   productUrl: 'https://example.com/logo.png',
   voucherTypeName: 'MAX_VOUCHER',
   orderUrl: 'https://example.com/logo.png',

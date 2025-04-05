@@ -5,20 +5,6 @@ import useProductsList from '@/components/products/composables/useProductsList'
 import { useProductsStore } from '@/stores/products'
 import CodaButton from '@/components/common/CodaButton.vue'
 
-// id: number
-//   gvtId: number
-//   name: string
-//   productTagline: string
-//   shortDescription: string
-//   longDescription: string
-//   logoLocation: string
-//   productUrl: string
-//   voucherTypeName: string
-//   orderUrl: string
-//   productTitle: string
-//   variableDenomPriceMinAmount: string
-//   variableDenomPriceMaxAmount: string
-
 const route = useRoute()
 const { getProductById } = useProductsStore()
 const productId = route.params.id
@@ -54,35 +40,32 @@ const copyVoucherCode = () => {
       alt="Product Logo"
     />
     <h1>{{ product?.name }}</h1>
-    <p v-html="product?.longDescription"></p>
+    <p class="product-detail-view__long-description" v-html="product?.longDescription"></p>
     <p>{{ product?.productTitle }}</p>
     <p>{{ product?.productTagline }}</p>
-    <p v-html="product?.shortDescription"></p>
-    <div v-if="product?.orderUrl">
-      You can order here
 
-      <CodaButton type="primary" :disabled="!product?.orderUrl" @click="onOrderNowClicked">
-        Order Now
-      </CodaButton>
-    </div>
+    <CodaButton
+      v-if="product?.orderUrl"
+      type="primary"
+      class="product-detail-view__order-button"
+      :disabled="!product?.orderUrl"
+      @click="onOrderNowClicked"
+    >
+      Order Now
+    </CodaButton>
+
     <div>
       Use discount voucher code:
       <div @click="copyVoucherCode" class="product-detail-view__voucher-code">
         {{ product?.voucherTypeName }}
       </div>
     </div>
-
-    <!-- <p>{{ product?.variableDenomPriceMinAmount }}</p>
-    <p>{{ product?.variableDenomPriceMaxAmount }}</p> -->
-    <p>
-      Price is between {{ product?.variableDenomPriceMinAmount }} -
-      {{ product?.variableDenomPriceMaxAmount }}
-    </p>
   </div>
 </template>
 <style scoped>
 .product-detail-view {
   margin-bottom: 8rem;
+  color: white;
 }
 .product-detail-view__image-banner {
   width: 100%;
@@ -98,5 +81,13 @@ const copyVoucherCode = () => {
   color: gold;
   text-align: center;
   cursor: pointer;
+}
+
+.product-detail-view__long-description {
+  margin: 1rem 0;
+}
+
+.product-detail-view__order-button {
+  margin: 1rem 0;
 }
 </style>
