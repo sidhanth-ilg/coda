@@ -2,6 +2,7 @@
 import type { Product } from '@/types/product'
 import { useRouter } from 'vue-router'
 import { sanitizeHtml } from '@/utilities/util'
+import CodaButton from '@/components/common/CodaButton.vue'
 
 const router = useRouter()
 
@@ -24,9 +25,13 @@ const onProductClicked = (id: number) => {
     <p v-html="sanitizeHtml(product.shortDescription)"></p>
     <p :data-testid="`product-item-${product.id}-title`">{{ product.productTitle }}</p>
 
-    <button class="product-item__view-button" @click="onProductClicked(product.id)">
+    <CodaButton
+      class="product-item__view-button"
+      @click="onProductClicked(product.id)"
+      :data-testid="`product-item-${product.id}-view-button`"
+    >
       View Product
-    </button>
+    </CodaButton>
   </div>
 </template>
 
@@ -49,15 +54,6 @@ const onProductClicked = (id: number) => {
 }
 
 .product-item__view-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  height: 2rem;
-  float: right;
   position: absolute;
   right: 1rem;
   bottom: 1rem;

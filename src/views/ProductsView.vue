@@ -2,6 +2,7 @@
 import ProductsList from '@/components/products/ProductsList.vue'
 import useProductsList from '@/components/products/composables/useProductsList'
 import { ref, watch } from 'vue'
+import CodaButton from '@/components/common/CodaButton.vue'
 
 const { searchTerm } = useProductsList()
 const debouncedSearchTerm = ref('')
@@ -30,14 +31,23 @@ watch(debouncedSearchTerm, (newValue) => {
           placeholder="Search..."
           v-model="debouncedSearchTerm"
         />
-        <button class="products-view__clear-button" @click="onClearClicked">Clear</button>
+        <CodaButton
+          class="products-view__clear-button"
+          @click="onClearClicked"
+          data-testid="clear-button"
+          type="danger"
+        >
+          Clear
+        </CodaButton>
       </div>
-      <button
+      <CodaButton
         class="products-view__create-button"
         @click="$router.push({ name: 'create-product' })"
+        data-testid="create-product-button"
+        type="primary"
       >
         Create Product +
-      </button>
+      </CodaButton>
     </div>
     <ProductsList />
   </div>
@@ -66,27 +76,9 @@ watch(debouncedSearchTerm, (newValue) => {
 }
 
 .products-view__clear-button {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  height: 2rem;
   margin-left: 1rem;
 }
 
-.products-view__create-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  height: 2rem;
-}
 input {
   padding: 0.5rem;
   border-radius: 4px;

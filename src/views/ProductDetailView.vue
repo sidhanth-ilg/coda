@@ -3,6 +3,7 @@ import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import useProductsList from '@/components/products/composables/useProductsList'
 import { useProductsStore } from '@/stores/products'
+import CodaButton from '@/components/common/CodaButton.vue'
 
 // id: number
 //   gvtId: number
@@ -47,6 +48,7 @@ const copyVoucherCode = () => {
 <template>
   <div class="product-detail-view">
     <img
+      v-if="product?.logoLocation"
       class="product-detail-view__image-banner"
       :src="product?.logoLocation"
       alt="Product Logo"
@@ -56,12 +58,12 @@ const copyVoucherCode = () => {
     <p>{{ product?.productTitle }}</p>
     <p>{{ product?.productTagline }}</p>
     <p v-html="product?.shortDescription"></p>
-    <div>
+    <div v-if="product?.orderUrl">
       You can order here
 
-      <button class="product-detail-view__order-button" @click="onOrderNowClicked">
+      <CodaButton type="primary" :disabled="!product?.orderUrl" @click="onOrderNowClicked">
         Order Now
-      </button>
+      </CodaButton>
     </div>
     <div>
       Use discount voucher code:
@@ -85,19 +87,6 @@ const copyVoucherCode = () => {
 .product-detail-view__image-banner {
   width: 100%;
   height: auto;
-}
-
-.product-detail-view__order-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
 }
 
 .product-detail-view__voucher-code {

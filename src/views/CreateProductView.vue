@@ -3,21 +3,22 @@ import type { Product } from '@/types/product'
 import { ref } from 'vue'
 import { useProductsStore } from '@/stores/products'
 import CodaInput from '@/components/common/CodaInput.vue'
+import CodaButton from '@/components/common/CodaButton.vue'
 
 const { addProduct, getProducts } = useProductsStore()
 
 const newProduct = ref<Product>({
-  name: '',
-  productTagline: '',
-  shortDescription: '',
-  longDescription: '',
-  logoLocation: '',
-  productUrl: '',
-  voucherTypeName: '',
-  orderUrl: '',
-  productTitle: '',
-  variableDenomPriceMinAmount: '',
-  variableDenomPriceMaxAmount: '',
+  name: 'sample name',
+  productTagline: 'sample tagline',
+  shortDescription: 'sample short description',
+  longDescription: 'sample long description',
+  logoLocation: 'https://cdn1.codashop.com/S/content/common/images/mno/lordsmobile_640x241.jpeg',
+  productUrl: 'https://www.codashop.com/',
+  voucherTypeName: 'MAX_DISCOUNT',
+  orderUrl: 'www.codashop.com',
+  productTitle: 'Sample Product Title',
+  variableDenomPriceMinAmount: '20',
+  variableDenomPriceMaxAmount: '40',
   gvtId: 0,
   id: getProducts.length + 1, // Incremental ID for simplicity
 })
@@ -61,7 +62,7 @@ const createProduct = () => {
 <template>
   <div class="create-product-view">
     <h1>Create Product</h1>
-    <form>
+    <div>
       <CodaInput
         label="Name"
         type="text"
@@ -141,10 +142,10 @@ const createProduct = () => {
       />
 
       <!-- Add a submit button -->
-      <button class="create-product-view__submit" type="submit" @click.prevent="createProduct">
+      <CodaButton type="primary" @click="createProduct" data-testid="create-product-button">
         Create Product
-      </button>
-    </form>
+      </CodaButton>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -155,16 +156,5 @@ const createProduct = () => {
   align-items: center;
   justify-content: center;
   padding-bottom: 4rem;
-}
-
-.create-product-view__submit {
-  background-color: #4a5568;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
 }
 </style>
