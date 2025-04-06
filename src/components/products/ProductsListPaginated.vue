@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import useProductsList from '@/components/products/composables/useProductsPaginatedList'
 import ProductItem from '@/components/products/ProductItem.vue'
-import { useVirtualList } from '@vueuse/core'
+//import { useVirtualList } from '@vueuse/core'
 
 const { products } = useProductsList()
 

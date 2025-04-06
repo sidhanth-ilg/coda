@@ -10,7 +10,8 @@ type Props = {
   error?: boolean
   isTextarea?: boolean
 }
-const props = defineProps<Props>()
+
+defineProps<Props>()
 </script>
 
 <template>

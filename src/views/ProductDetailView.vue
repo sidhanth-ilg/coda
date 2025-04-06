@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
-import useProductsList from '@/components/products/composables/useProductsList'
 import { useProductsStore } from '@/stores/products'
 import CodaButton from '@/components/common/CodaButton.vue'
 

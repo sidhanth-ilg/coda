@@ -12,16 +12,13 @@ type Props = {
 type Emits = {
   click: []
 }
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   type: 'primary',
   disabled: false,
+  dataTestId: 'coda-button',
 })
 
 const emit = defineEmits<Emits>()
-
-const dataTestId = computed(() => {
-  return props.dataTestId || 'coda-button'
-})
 </script>
 <template>
   <button

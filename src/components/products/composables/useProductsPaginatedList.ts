@@ -9,7 +9,6 @@ const itemsPerPage = ref(2) // Number of items to display per page
 
 const useProductsList = () => {
   const productsStore = useProductsStore()
-  const products = storeToRefs(productsStore).getProducts
 
   // Filter products based on search term
   const filteredProducts = computed(() => {
