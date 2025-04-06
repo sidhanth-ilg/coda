@@ -174,6 +174,13 @@ const handleSubmit = () => {
       >
         {{ isEditMode ? 'Update Product' : 'Create Product' }}
       </CodaButton>
+      <CodaButton
+        class="create-product-view__back-button"
+        data-testid="back-button"
+        @click="$router.push({ name: isFromPaginated ? 'products-paginated' : 'products' })"
+      >
+        Go Back
+      </CodaButton>
     </div>
   </div>
 </template>
@@ -191,5 +198,8 @@ const handleSubmit = () => {
 .create-product-view form {
   display: flex;
   flex-direction: column;
+}
+.create-product-view__back-button {
+  margin-left: 1rem;
 }
 </style>

@@ -50,7 +50,7 @@ watch(debouncedSearchTerm, (newValue) => {
           class="products-view__create-button"
           data-testid="create-product-button"
           type="primary"
-          @click="$router.push({ name: 'create-product' })"
+          @click="$router.push({ name: 'create-product', query: { fromPaginated: 'true' } })"
         >
           Create Product +
         </CodaButton>
