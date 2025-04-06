@@ -34,6 +34,7 @@ watch(debouncedSearchTerm, (newValue) => {
           type="text"
           placeholder="Search..."
           v-model="debouncedSearchTerm"
+          class="products-view__input"
         />
         <CodaButton
           class="products-view__clear-button"
@@ -138,7 +139,7 @@ watch(debouncedSearchTerm, (newValue) => {
   height: 2rem;
 }
 
-input {
+.products-view__input {
   padding: 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;
@@ -203,7 +204,7 @@ input {
     width: 100%;
   }
 
-  input {
+  .products-view__input {
     width: 100%;
   }
 
