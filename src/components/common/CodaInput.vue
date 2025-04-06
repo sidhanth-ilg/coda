@@ -24,6 +24,8 @@ defineProps<Props>()
     v-model="model"
     :placeholder="placeholder"
     class="coda-input__input coda-input__input-textarea"
+    :class="{ 'coda-input__input-error': error }"
+    v-bind="$attrs"
   ></textarea>
   <input
     v-else
@@ -32,6 +34,8 @@ defineProps<Props>()
     :type="type"
     :placeholder="placeholder"
     class="coda-input__input"
+    v-bind="$attrs"
+    :class="{ 'coda-input__input-error': error }"
   />
 </template>
 <style scoped>
@@ -52,5 +56,9 @@ defineProps<Props>()
 
 .coda-input__input-textarea {
   height: 12rem;
+}
+
+.coda-input__input-error {
+  border: 4px solid #e53e3e;
 }
 </style>

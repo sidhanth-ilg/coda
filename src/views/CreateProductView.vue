@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Product } from '@/types/product'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useProductsStore } from '@/stores/products'
 import { useRoute, useRouter } from 'vue-router'
 import CodaInput from '@/components/common/CodaInput.vue'
@@ -9,6 +9,8 @@ import CodaButton from '@/components/common/CodaButton.vue'
 const route = useRoute()
 const router = useRouter()
 const { addProduct, getProducts, updateProduct, getProductById } = useProductsStore()
+
+const isLoading = ref(false)
 
 // Check if we're in edit mode
 const isEditMode = ref(route.query.edit === 'true')
@@ -31,6 +33,28 @@ const newProduct = ref<Product>({
   id: getProducts.length + 1, // Incremental ID for simplicity
 })
 
+const formFields = ref<
+  Array<{
+    id: keyof Product
+    label: string
+    type: string
+    required?: boolean
+    error?: boolean
+  }>
+>([
+  { id: 'name', label: 'Name', type: 'text', required: true, error: false },
+  { id: 'productTagline', label: 'Product Tagline', type: 'text', required: true },
+  { id: 'shortDescription', label: 'Short Description', type: 'text', required: true },
+  { id: 'longDescription', label: 'Long Description', type: 'textarea', required: true },
+  { id: 'logoLocation', label: 'Logo Location', type: 'text' },
+  { id: 'productUrl', label: 'Product URL', type: 'text', required: true },
+  { id: 'voucherTypeName', label: 'Voucher Type Name', type: 'text', required: true },
+  { id: 'orderUrl', label: 'Order URL', type: 'text', required: true },
+  { id: 'productTitle', label: 'Product Title', type: 'text', required: true },
+  { id: 'variableDenomPriceMinAmount', label: 'Min Price', type: 'number' },
+  { id: 'variableDenomPriceMaxAmount', label: 'Max Price', type: 'number' },
+])
+
 // Load product data if in edit mode
 onMounted(() => {
   if (isEditMode.value && productId.value) {
@@ -46,8 +70,9 @@ onMounted(() => {
 })
 
 const handleSubmit = () => {
-  // Validate the product data
-  if (!newProduct.value.name || !newProduct.value.productTagline) {
+  let isValid = !formFields.value.some((field) => field.required && !newProduct.value[field.id])
+
+  if (!isValid) {
     alert('Please fill in all required fields.')
     return
   }
@@ -70,117 +95,62 @@ const handleSubmit = () => {
     alert(`Failed to ${isEditMode.value ? 'update' : 'create'} product.`)
   }
 }
+
+watch(
+  newProduct,
+  (newValue) => {
+    console.log('New product data:', newValue)
+    formFields.value.forEach((field) => {
+      if (newValue[field.id] === '') {
+        field.error = true
+      } else {
+        field.error = false
+      }
+    })
+  },
+  { deep: true },
+)
+
+const handleCancel = () => {
+  router.push({ name: isFromPaginated.value ? 'products-paginated' : 'products' })
+}
 </script>
 <template>
   <div class="create-product-view">
     <h1>{{ isEditMode ? 'Edit Product' : 'Create Product' }}</h1>
-    <div>
+    <div @submit.prevent="handleSubmit" class="create-product-view__form">
       <CodaInput
-        id="name"
-        v-model="newProduct.name"
-        label="Name"
-        type="text"
-        placeholder="Enter product name"
+        v-for="field in formFields"
+        v-model="newProduct[field.id]"
+        :key="field.id"
+        :id="field.id"
+        :label="field.label"
+        :type="field.type"
+        :required="field.required"
+        :disabled="isLoading"
+        :error="field.error"
+        :placeholder="'Enter ' + field.label.toLowerCase()"
       />
 
-      <CodaInput
-        id="productTagline"
-        v-model="newProduct.productTagline"
-        label="Product Tagline"
-        type="text"
-        placeholder="Enter product tagline"
-      />
-
-      <CodaInput
-        id="shortDescription"
-        v-model="newProduct.shortDescription"
-        label="Short Description"
-        type="text"
-        placeholder="Enter a short description"
-        is-textarea
-      />
-
-      <CodaInput
-        id="longDescription"
-        v-model="newProduct.longDescription"
-        label="Long Description"
-        type="textarea"
-        placeholder="Enter detailed product description"
-        is-textarea
-      />
-
-      <CodaInput
-        id="logoLocation"
-        v-model="newProduct.logoLocation"
-        label="Logo Location"
-        type="text"
-        placeholder="Enter logo URL or path"
-      />
-
-      <CodaInput
-        id="productUrl"
-        v-model="newProduct.productUrl"
-        label="Product URL"
-        type="text"
-        placeholder="Enter product website URL"
-      />
-
-      <CodaInput
-        id="voucherTypeName"
-        v-model="newProduct.voucherTypeName"
-        label="Voucher Type Name"
-        type="text"
-        placeholder="Enter voucher type"
-      />
-
-      <CodaInput
-        id="orderUrl"
-        v-model="newProduct.orderUrl"
-        label="Order URL"
-        type="text"
-        placeholder="Enter order page URL"
-      />
-
-      <CodaInput
-        id="productTitle"
-        v-model="newProduct.productTitle"
-        label="Product Title"
-        type="text"
-        placeholder="Enter product title"
-      />
-
-      <CodaInput
-        id="variableDenomPriceMinAmount"
-        v-model.number="newProduct.variableDenomPriceMinAmount"
-        label="Variable Denom Price Min Amount"
-        type="number"
-        placeholder="Enter minimum price"
-      />
-
-      <CodaInput
-        id="variableDenomPriceMaxAmount"
-        v-model.number="newProduct.variableDenomPriceMaxAmount"
-        label="Variable Denom Price Max Amount"
-        type="number"
-        placeholder="Enter maximum price"
-      />
-
-      <!-- Update button text based on mode -->
-      <CodaButton
-        type="primary"
-        :data-testid="isEditMode ? 'update-product-button' : 'create-product-button'"
-        class="create-product-view__submit-button"
-        @click="handleSubmit"
-      >
-        {{ isEditMode ? 'Update Product' : 'Create Product' }}
-      </CodaButton>
-      <CodaButton
-        class="create-product-view__back-button"
-        data-testid="back-button"
-        @click="$router.push({ name: isFromPaginated ? 'products-paginated' : 'products' })"
-      >
-        Go Back
-      </CodaButton>
+      <div class="create-product-view__buttons">
+        <CodaButton
+          type="primary"
+          :disabled="isLoading"
+          :data-testid="isEditMode ? 'update-product-button' : 'create-product-button'"
+          @click="handleSubmit"
+        >
+          {{ isEditMode ? 'Update Product' : 'Create Product' }}
+        </CodaButton>
+        <CodaButton
+          type="danger"
+          :disabled="isLoading"
+          data-testid="cancel-button"
+          class="create-product-view__back-button"
+          @click="handleCancel"
+        >
+          Cancel
+        </CodaButton>
+      </div>
     </div>
   </div>
 </template>
@@ -201,5 +171,9 @@ const handleSubmit = () => {
 }
 .create-product-view__back-button {
   margin-left: 1rem;
+}
+
+.create-product-view__form {
+  width: 100%;
 }
 </style>
