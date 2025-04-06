@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type { Product } from '@/types/product'
 import { useRouter } from 'vue-router'
+import { computed } from 'vue'
 import { sanitizeHtml } from '@/utilities/util'
+import CodaButton from '@/components/common/CodaButton.vue'
 
 const router = useRouter()
 
@@ -9,24 +11,49 @@ type Props = {
   product: Pick<Product, 'id' | 'name' | 'shortDescription' | 'productTitle'>
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 const onProductClicked = (id: number) => {
   router.push({
     name: 'product-detail',
     params: { id },
   })
 }
+
+const onEditProductClicked = (id: number) => {
+  router.push({
+    name: 'create-product',
+    params: { id },
+    query: { edit: 'true', id },
+  })
+}
+
+const testIds = computed(() => ({
+  container: `product-item-${props.product.id}`,
+  name: `product-item-${props.product.id}-name`,
+  title: `product-item-${props.product.id}-title`,
+  viewButton: `product-item-${props.product.id}-view-button`,
+  editButton: `product-item-${props.product.id}-edit-button`,
+}))
 </script>
 
 <template>
-  <div class="product-item" :data-testid="`product-item-${product.id}`">
-    <h2 :data-testid="`product-item-${product.id}-name`">{{ product.name }}</h2>
+  <div class="product-item" :data-testid="testIds.container">
+    <h2 :data-testid="testIds.name">{{ product.name }}</h2>
     <p v-html="sanitizeHtml(product.shortDescription)"></p>
-    <p :data-testid="`product-item-${product.id}-title`">{{ product.productTitle }}</p>
+    <p :data-testid="testIds.title">{{ product.productTitle }}</p>
 
-    <button class="product-item__view-button" @click="onProductClicked(product.id)">
-      View Product
-    </button>
+    <div class="product-item__button-container">
+      <CodaButton
+        class="product-item__view-button"
+        @click="onProductClicked(product.id)"
+        :data-testid="testIds.viewButton"
+      >
+        View Product
+      </CodaButton>
+      <CodaButton @click="onEditProductClicked(product.id)" :data-testid="testIds.editButton">
+        Edit Product
+      </CodaButton>
+    </div>
   </div>
 </template>
 
@@ -48,19 +75,14 @@ const onProductClicked = (id: number) => {
   position: relative;
 }
 
-.product-item__view-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  height: 2rem;
-  float: right;
+.product-item__button-container {
   position: absolute;
   right: 1rem;
   bottom: 1rem;
+}
+
+.product-item__view-button {
+  margin-right: 1rem;
 }
 
 @media screen and (max-width: 768px) {
@@ -70,7 +92,7 @@ const onProductClicked = (id: number) => {
     border-radius: 0;
     height: auto;
   }
-  .product-item__view-button {
+  .product-item__button-container {
     position: static;
     float: none;
     width: 100%;
