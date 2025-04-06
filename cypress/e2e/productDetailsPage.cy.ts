@@ -18,7 +18,6 @@ describe('it should display the product details page', () => {
       .should('exist')
       .click()
       .then(() => {
-        // Verify clipboard spy was called with correct code
         cy.get('@clipboardSpy').should('be.calledWith', expectedVoucherCode)
       })
   })
