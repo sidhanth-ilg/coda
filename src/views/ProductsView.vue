@@ -5,7 +5,7 @@ import { ref, watch } from 'vue'
 import CodaButton from '@/components/common/CodaButton.vue'
 
 const { searchTerm } = useProductsList()
-const debouncedSearchTerm = ref('')
+const debouncedSearchTerm = ref(searchTerm.value)
 
 const onClearClicked = (): void => {
   debouncedSearchTerm.value = ''
@@ -40,14 +40,24 @@ watch(debouncedSearchTerm, (newValue) => {
           Clear
         </CodaButton>
       </div>
-      <CodaButton
-        class="products-view__create-button"
-        @click="$router.push({ name: 'create-product' })"
-        data-testid="create-product-button"
-        type="primary"
-      >
-        Create Product +
-      </CodaButton>
+      <div class="products-view__header-right-buttons">
+        <CodaButton
+          class="products-view__create-button"
+          @click="$router.push({ name: 'create-product' })"
+          data-testid="create-product-button"
+          type="primary"
+        >
+          Create Product +
+        </CodaButton>
+        <CodaButton
+          class="products-view__goto-button"
+          @click="$router.push({ name: 'products-paginated' })"
+          data-testid="create-product-button"
+          type="primary"
+        >
+          Go To Paginated View
+        </CodaButton>
+      </div>
     </div>
     <ProductsList />
   </div>
@@ -72,11 +82,20 @@ watch(debouncedSearchTerm, (newValue) => {
 .products-view__search {
   display: flex;
   align-items: center;
-  width: 70%;
+  width: 60%;
 }
 
 .products-view__clear-button {
   margin-left: 1rem;
+}
+
+.products-view__goto-button {
+  margin-left: 1rem;
+}
+
+.products-view__header-right-buttons {
+  display: flex;
+  align-items: center;
 }
 
 input {
@@ -111,6 +130,18 @@ input {
     margin-top: 1rem;
     width: 100%;
   }
+
+  .products-view__header-right-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .products-view__goto-button {
+    margin: 0;
+    margin-top: 1rem;
+    width: 100%;
+  }
+
   input {
     width: 100%;
   }

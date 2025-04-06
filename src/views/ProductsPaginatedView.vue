@@ -5,7 +5,7 @@ import useProductsList from '@/components/products/composables/useProductsPagina
 import { ref, watch } from 'vue'
 
 const { searchTerm, currentPage, totalPages, nextPage, previousPage, goToPage } = useProductsList()
-const debouncedSearchTerm = ref('')
+const debouncedSearchTerm = ref(searchTerm.value)
 
 const onClearClicked = (): void => {
   debouncedSearchTerm.value = ''
@@ -35,14 +35,33 @@ watch(debouncedSearchTerm, (newValue) => {
           placeholder="Search..."
           v-model="debouncedSearchTerm"
         />
-        <button class="products-view__clear-button" @click="onClearClicked">Clear</button>
+        <CodaButton
+          class="products-view__clear-button"
+          @click="onClearClicked"
+          data-testid="clear-button"
+          type="danger"
+        >
+          Clear
+        </CodaButton>
       </div>
-      <button
-        class="products-view__create-button"
-        @click="$router.push({ name: 'create-product', query: { fromPaginated: 'true' } })"
-      >
-        Create Product +
-      </button>
+      <div class="products-view__header-right-buttons">
+        <CodaButton
+          class="products-view__create-button"
+          @click="$router.push({ name: 'create-product' })"
+          data-testid="create-product-button"
+          type="primary"
+        >
+          Create Product +
+        </CodaButton>
+        <CodaButton
+          class="products-view__goto-button"
+          @click="$router.push({ name: 'products' })"
+          data-testid="create-product-button"
+          type="primary"
+        >
+          Go To Scroll View
+        </CodaButton>
+      </div>
     </div>
     <ProductsListPaginated />
 
@@ -84,7 +103,16 @@ watch(debouncedSearchTerm, (newValue) => {
 .products-view__search {
   display: flex;
   align-items: center;
-  width: 70%;
+  width: 50%;
+}
+
+.products-view__goto-button {
+  margin-left: 1rem;
+}
+
+.products-view__header-right-buttons {
+  display: flex;
+  align-items: center;
 }
 
 .products-view__clear-button {
@@ -187,6 +215,17 @@ input {
 
   .pagination__button {
     flex: 1;
+  }
+
+  .products-view__header-right-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .products-view__goto-button {
+    margin: 0;
+    margin-top: 1rem;
+    width: 100%;
   }
 }
 </style>
