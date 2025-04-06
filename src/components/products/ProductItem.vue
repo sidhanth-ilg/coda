@@ -46,12 +46,12 @@ const testIds = computed(() => ({
     <div class="product-item__button-container">
       <CodaButton
         class="product-item__view-button"
-        @click="onProductClicked(product.id)"
         :data-testid="testIds.viewButton"
+        @click="onProductClicked(product.id)"
       >
         View Product
       </CodaButton>
-      <CodaButton @click="onEditProductClicked(product.id)" :data-testid="testIds.editButton">
+      <CodaButton :data-testid="testIds.editButton" @click="onEditProductClicked(product.id)">
         Edit Product
       </CodaButton>
     </div>

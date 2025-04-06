@@ -34,9 +34,9 @@ watch(debouncedSearchTerm, (newValue) => {
         />
         <CodaButton
           class="products-view__clear-button"
-          @click="onClearClicked"
           data-testid="clear-button"
           type="danger"
+          @click="onClearClicked"
         >
           Clear
         </CodaButton>
@@ -44,17 +44,17 @@ watch(debouncedSearchTerm, (newValue) => {
       <div class="products-view__header-right-buttons">
         <CodaButton
           class="products-view__create-button"
-          @click="$router.push({ name: 'create-product' })"
           data-testid="create-product-button"
           type="primary"
+          @click="$router.push({ name: 'create-product' })"
         >
           Create Product +
         </CodaButton>
         <CodaButton
           class="products-view__goto-button"
-          @click="$router.push({ name: 'products-paginated' })"
           data-testid="create-product-button"
           type="primary"
+          @click="$router.push({ name: 'products-paginated' })"
         >
           Go To Paginated View
         </CodaButton>

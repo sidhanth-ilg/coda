@@ -30,17 +30,17 @@ watch(debouncedSearchTerm, (newValue) => {
     <div class="products-view__header">
       <div class="products-view__search">
         <input
+          v-model="debouncedSearchTerm"
           data-testid="search-input"
           type="text"
           placeholder="Search..."
-          v-model="debouncedSearchTerm"
           class="products-view__input"
         />
         <CodaButton
           class="products-view__clear-button"
-          @click="onClearClicked"
           data-testid="clear-button"
           type="danger"
+          @click="onClearClicked"
         >
           Clear
         </CodaButton>
@@ -48,17 +48,17 @@ watch(debouncedSearchTerm, (newValue) => {
       <div class="products-view__header-right-buttons">
         <CodaButton
           class="products-view__create-button"
-          @click="$router.push({ name: 'create-product' })"
           data-testid="create-product-button"
           type="primary"
+          @click="$router.push({ name: 'create-product' })"
         >
           Create Product +
         </CodaButton>
         <CodaButton
           class="products-view__goto-button"
-          @click="$router.push({ name: 'products' })"
           data-testid="create-product-button"
           type="primary"
+          @click="$router.push({ name: 'products' })"
         >
           Go To Scroll View
         </CodaButton>
@@ -76,8 +76,8 @@ watch(debouncedSearchTerm, (newValue) => {
       <CodaButton
         class="pagination__button"
         :disabled="currentPage === totalPages"
-        @click="nextPage"
         label="Next"
+        @click="nextPage"
       >
         Next
       </CodaButton>

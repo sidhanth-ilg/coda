@@ -76,101 +76,101 @@ const handleSubmit = () => {
     <h1>{{ isEditMode ? 'Edit Product' : 'Create Product' }}</h1>
     <div>
       <CodaInput
+        id="name"
+        v-model="newProduct.name"
         label="Name"
         type="text"
-        id="name"
         placeholder="Enter product name"
-        v-model="newProduct.name"
       />
 
       <CodaInput
+        id="productTagline"
+        v-model="newProduct.productTagline"
         label="Product Tagline"
         type="text"
-        id="productTagline"
         placeholder="Enter product tagline"
-        v-model="newProduct.productTagline"
       />
 
       <CodaInput
+        id="shortDescription"
+        v-model="newProduct.shortDescription"
         label="Short Description"
         type="text"
-        id="shortDescription"
         placeholder="Enter a short description"
-        v-model="newProduct.shortDescription"
         is-textarea
       />
 
       <CodaInput
+        id="longDescription"
+        v-model="newProduct.longDescription"
         label="Long Description"
         type="textarea"
-        id="longDescription"
         placeholder="Enter detailed product description"
-        v-model="newProduct.longDescription"
         is-textarea
       />
 
       <CodaInput
+        id="logoLocation"
+        v-model="newProduct.logoLocation"
         label="Logo Location"
         type="text"
-        id="logoLocation"
         placeholder="Enter logo URL or path"
-        v-model="newProduct.logoLocation"
       />
 
       <CodaInput
+        id="productUrl"
+        v-model="newProduct.productUrl"
         label="Product URL"
         type="text"
-        id="productUrl"
         placeholder="Enter product website URL"
-        v-model="newProduct.productUrl"
       />
 
       <CodaInput
+        id="voucherTypeName"
+        v-model="newProduct.voucherTypeName"
         label="Voucher Type Name"
         type="text"
-        id="voucherTypeName"
         placeholder="Enter voucher type"
-        v-model="newProduct.voucherTypeName"
       />
 
       <CodaInput
+        id="orderUrl"
+        v-model="newProduct.orderUrl"
         label="Order URL"
         type="text"
-        id="orderUrl"
         placeholder="Enter order page URL"
-        v-model="newProduct.orderUrl"
       />
 
       <CodaInput
+        id="productTitle"
+        v-model="newProduct.productTitle"
         label="Product Title"
         type="text"
-        id="productTitle"
         placeholder="Enter product title"
-        v-model="newProduct.productTitle"
       />
 
       <CodaInput
+        id="variableDenomPriceMinAmount"
+        v-model.number="newProduct.variableDenomPriceMinAmount"
         label="Variable Denom Price Min Amount"
         type="number"
-        id="variableDenomPriceMinAmount"
         placeholder="Enter minimum price"
-        v-model.number="newProduct.variableDenomPriceMinAmount"
       />
 
       <CodaInput
+        id="variableDenomPriceMaxAmount"
+        v-model.number="newProduct.variableDenomPriceMaxAmount"
         label="Variable Denom Price Max Amount"
         type="number"
-        id="variableDenomPriceMaxAmount"
         placeholder="Enter maximum price"
-        v-model.number="newProduct.variableDenomPriceMaxAmount"
       />
 
       <!-- Update button text based on mode -->
       <CodaButton
         type="primary"
-        @click="handleSubmit"
         :data-testid="isEditMode ? 'update-product-button' : 'create-product-button'"
         class="create-product-view__submit-button"
+        @click="handleSubmit"
       >
         {{ isEditMode ? 'Update Product' : 'Create Product' }}
       </CodaButton>

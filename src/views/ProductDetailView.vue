@@ -67,8 +67,8 @@ const testIds = computed(() => ({
       Use discount voucher code:
       <div
         :data-testid="testIds.voucherCode"
-        @click="copyVoucherCode"
         class="product-detail-view__voucher-code"
+        @click="copyVoucherCode"
       >
         {{ product?.voucherTypeName }}
       </div>

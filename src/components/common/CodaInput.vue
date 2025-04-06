@@ -19,17 +19,17 @@ const props = defineProps<Props>()
   </label>
   <textarea
     v-if="isTextarea"
-    v-model="model"
     :id="label"
+    v-model="model"
     :placeholder="placeholder"
     class="coda-input__input coda-input__input-textarea"
   ></textarea>
   <input
     v-else
     :id="label"
+    v-model="model"
     :type="type"
     :placeholder="placeholder"
-    v-model="model"
     class="coda-input__input"
   />
 </template>
