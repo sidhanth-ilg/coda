@@ -1,8 +1,4 @@
-<!-- Generic button component-->
 <script setup lang="ts">
-import { computed, defineProps } from 'vue'
-import { useRouter } from 'vue-router'
-
 type Props = {
   type?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning'
   disabled?: boolean
