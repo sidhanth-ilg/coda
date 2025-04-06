@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import CodaButton from '@/components/common/CodaButton.vue'
 import ProductsList from '@/components/products/ProductsList.vue'
 import useProductsList from '@/components/products/composables/useProductsList'
 import { ref, watch } from 'vue'
@@ -47,13 +48,24 @@ watch(debouncedSearchTerm, (newValue) => {
 
     <!-- Pagination Controls -->
     <div v-if="totalPages > 1" class="pagination">
-      <button class="pagination__button" :disabled="currentPage === 1" @click="previousPage">
+      <CodaButton class="pagination__button" :disabled="currentPage === 1" @click="previousPage"
+        >Previous</CodaButton
+      >
+      <!-- <button class="pagination__button" :disabled="currentPage === 1" @click="previousPage">
         Previous
-      </button>
+      </button> -->
       <div class="pagination__info">Page {{ currentPage }} of {{ totalPages }}</div>
-      <button class="pagination__button" :disabled="currentPage === totalPages" @click="nextPage">
+      <CodaButton
+        class="pagination__button"
+        :disabled="currentPage === totalPages"
+        @click="nextPage"
+        label="Next"
+      >
+        Next</CodaButton
+      >
+      <!-- <button class="pagination__button" :disabled="currentPage === totalPages" @click="nextPage">
         Next
-      </button>
+      </button> -->
     </div>
   </div>
 </template>
