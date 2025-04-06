@@ -9,6 +9,7 @@ const router = useRouter()
 
 type Props = {
   product: Pick<Product, 'id' | 'name' | 'shortDescription' | 'productTitle'>
+  fromPaginated?: boolean
 }
 
 const props = defineProps<Props>()
@@ -23,7 +24,7 @@ const onEditProductClicked = (id: number) => {
   router.push({
     name: 'create-product',
     params: { id },
-    query: { edit: 'true', id },
+    query: { edit: 'true', id, fromPaginated: props.fromPaginated ? 'true' : undefined },
   })
 }
 

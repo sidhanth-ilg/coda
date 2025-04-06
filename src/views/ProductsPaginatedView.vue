@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CodaButton from '@/components/common/CodaButton.vue'
-import ProductsList from '@/components/products/ProductsList.vue'
-import useProductsList from '@/components/products/composables/useProductsList'
+import ProductsListPaginated from '@/components/products/ProductsListPaginated.vue'
+import useProductsList from '@/components/products/composables/useProductsPaginatedList.ts'
 import { ref, watch } from 'vue'
 
 const { searchTerm, currentPage, totalPages, nextPage, previousPage, goToPage } = useProductsList()
@@ -39,21 +39,19 @@ watch(debouncedSearchTerm, (newValue) => {
       </div>
       <button
         class="products-view__create-button"
-        @click="$router.push({ name: 'create-product' })"
+        @click="$router.push({ name: 'create-product', query: { fromPaginated: 'true' } })"
       >
         Create Product +
       </button>
     </div>
-    <ProductsList />
+    <ProductsListPaginated />
 
     <!-- Pagination Controls -->
     <div v-if="totalPages > 1" class="pagination">
-      <CodaButton class="pagination__button" :disabled="currentPage === 1" @click="previousPage"
-        >Previous</CodaButton
-      >
-      <!-- <button class="pagination__button" :disabled="currentPage === 1" @click="previousPage">
+      <CodaButton class="pagination__button" :disabled="currentPage === 1" @click="previousPage">
         Previous
-      </button> -->
+      </CodaButton>
+
       <div class="pagination__info">Page {{ currentPage }} of {{ totalPages }}</div>
       <CodaButton
         class="pagination__button"
@@ -61,11 +59,8 @@ watch(debouncedSearchTerm, (newValue) => {
         @click="nextPage"
         label="Next"
       >
-        Next</CodaButton
-      >
-      <!-- <button class="pagination__button" :disabled="currentPage === totalPages" @click="nextPage">
         Next
-      </button> -->
+      </CodaButton>
     </div>
   </div>
 </template>
@@ -114,6 +109,7 @@ watch(debouncedSearchTerm, (newValue) => {
   font-size: 1rem;
   height: 2rem;
 }
+
 input {
   padding: 0.5rem;
   border-radius: 4px;
@@ -155,6 +151,7 @@ input {
   .products-view {
     padding: 0;
   }
+
   .products-view__header {
     flex-direction: column;
     align-items: flex-start;
@@ -172,10 +169,12 @@ input {
     margin: 0;
     margin-top: 1rem;
   }
+
   .products-view__create-button {
     margin-top: 1rem;
     width: 100%;
   }
+
   input {
     width: 100%;
   }

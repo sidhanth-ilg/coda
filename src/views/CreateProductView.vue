@@ -13,6 +13,7 @@ const { addProduct, getProducts, updateProduct, getProductById } = useProductsSt
 // Check if we're in edit mode
 const isEditMode = ref(route.query.edit === 'true')
 const productId = ref(route.query.id ? parseInt(route.query.id as string, 10) : null)
+const isFromPaginated = ref(route.query.fromPaginated === 'true')
 
 const newProduct = ref<Product>({
   name: 'Sample Product',
@@ -39,7 +40,7 @@ onMounted(() => {
     } catch (error) {
       console.error('Error loading product:', error)
       alert('Product not found')
-      router.push({ name: 'products' })
+      router.push({ name: isFromPaginated.value ? 'products-paginated' : 'products' })
     }
   }
 })
@@ -63,7 +64,7 @@ const handleSubmit = () => {
     }
 
     // Redirect back to products list
-    router.push({ name: 'products' })
+    router.push({ name: isFromPaginated.value ? 'products-paginated' : 'products' })
   } catch (error) {
     console.error('Error saving product:', error)
     alert(`Failed to ${isEditMode.value ? 'update' : 'create'} product.`)
