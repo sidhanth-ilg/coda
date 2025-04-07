@@ -117,10 +117,10 @@ const handleCancel = () => {
 <template>
   <div class="create-product-view">
     <h1>{{ isEditMode ? 'Edit Product' : 'Create Product' }}</h1>
-    <div @submit.prevent="handleSubmit" class="create-product-view__form">
+    <form @submit.prevent="handleSubmit" class="create-product-view__form">
       <CodaInput
         v-for="field in formFields"
-        v-model="newProduct[field.id]"
+        v-model.trim="newProduct[field.id]"
         :key="field.id"
         :id="field.id"
         :label="field.label"
@@ -136,7 +136,6 @@ const handleCancel = () => {
           type="primary"
           :disabled="isLoading"
           :data-testid="isEditMode ? 'update-product-button' : 'create-product-button'"
-          @click="handleSubmit"
         >
           {{ isEditMode ? 'Update Product' : 'Create Product' }}
         </CodaButton>
@@ -150,7 +149,7 @@ const handleCancel = () => {
           Cancel
         </CodaButton>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 <style scoped>
