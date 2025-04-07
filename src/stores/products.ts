@@ -9,18 +9,18 @@ export const useProductsStore = defineStore('products', () => {
 
   const getProducts = computed(() => products.value)
 
-  function setLoading(value: boolean) {
+  function setLoading(value: boolean): void {
     loading.value = value
   }
 
-  function addProduct(product: Product) {
+  function addProduct(product: Product): void {
     products.value.push(product)
   }
-  function removeProduct(productId: number) {
+  function removeProduct(productId: number): void {
     products.value = products.value.filter((product) => product.id !== productId)
   }
 
-  function updateProduct(productId: number, updatedProduct: Product) {
+  function updateProduct(productId: number, updatedProduct: Product): void {
     const productIndex = products.value.findIndex((product) => product.id === productId)
     if (productIndex !== -1) {
       products.value[productIndex] = { ...products.value[productIndex], ...updatedProduct }
@@ -29,7 +29,7 @@ export const useProductsStore = defineStore('products', () => {
     }
   }
 
-  const getProductById = (id: number) => {
+  const getProductById = (id: number): Product => {
     const product = products.value.find((product) => product.id === id)
     if (!product) {
       throw new Error(`Product with id ${id} not found`)

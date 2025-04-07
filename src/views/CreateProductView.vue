@@ -14,7 +14,7 @@ const isLoading = ref(false)
 
 // Check if we're in edit mode
 const isEditMode = ref(route.query.edit === 'true')
-const productId = ref(route.query.id ? parseInt(route.query.id as string, 10) : null)
+const productId = ref(route.query.id ? parseInt(route.query.id as string) : null)
 const isFromPaginated = ref(route.query.fromPaginated === 'true')
 
 const newProduct = ref<Product>({
@@ -44,7 +44,7 @@ const formFields = ref<
 >([
   { id: 'name', label: 'Name', type: 'text', required: true, error: false },
   { id: 'productTagline', label: 'Product Tagline', type: 'text', required: true },
-  { id: 'shortDescription', label: 'Short Description', type: 'text', required: true },
+  { id: 'shortDescription', label: 'Short Description', type: 'textarea', required: true },
   { id: 'longDescription', label: 'Long Description', type: 'textarea', required: true },
   { id: 'logoLocation', label: 'Logo Location', type: 'text' },
   { id: 'productUrl', label: 'Product URL', type: 'text', required: true },
@@ -70,7 +70,7 @@ onMounted(() => {
 })
 
 const handleSubmit = () => {
-  const isValid = !formFields.value.some((field) => field.required && !newProduct.value[field.id])
+  let isValid = !formFields.value.some((field) => field.required && !newProduct.value[field.id])
 
   if (!isValid) {
     alert('Please fill in all required fields.')

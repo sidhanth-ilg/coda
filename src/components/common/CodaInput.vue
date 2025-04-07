@@ -8,15 +8,16 @@ type Props = {
   type: string
   placeholder: string
   error?: boolean
-  isTextarea?: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+const isTextarea = props.type === 'textarea'
 </script>
 
 <template>
   <label :for="label" class="coda-input-label">
     {{ label }}
+    <span v-if="error" class="coda-input-label__error">(Please fill the required information)</span>
   </label>
   <textarea
     v-if="isTextarea"
@@ -60,5 +61,10 @@ defineProps<Props>()
 
 .coda-input__input-error {
   border: 4px solid #e53e3e;
+}
+
+.coda-input-label__error {
+  color: #e53e3e;
+  font-size: 12px;
 }
 </style>
