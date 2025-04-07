@@ -1,6 +1,5 @@
 import { useProductsStore } from '@/stores/products'
 import { computed, ref } from 'vue'
-import { storeToRefs } from 'pinia'
 import type { Product } from '@/types/product'
 
 const searchTerm = ref('')

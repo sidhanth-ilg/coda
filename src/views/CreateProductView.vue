@@ -70,7 +70,7 @@ onMounted(() => {
 })
 
 const handleSubmit = () => {
-  let isValid = !formFields.value.some((field) => field.required && !newProduct.value[field.id])
+  const isValid = !formFields.value.some((field) => field.required && !newProduct.value[field.id])
 
   if (!isValid) {
     alert('Please fill in all required fields.')
