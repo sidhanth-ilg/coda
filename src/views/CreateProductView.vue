@@ -99,7 +99,6 @@ const handleSubmit = () => {
 watch(
   newProduct,
   (newValue) => {
-    console.log('New product data:', newValue)
     formFields.value.forEach((field) => {
       if (newValue[field.id] === '') {
         field.error = true
