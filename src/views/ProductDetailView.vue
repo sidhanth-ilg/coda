@@ -3,8 +3,10 @@ import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { useProductsStore } from '@/stores/products'
 import CodaButton from '@/components/common/CodaButton.vue'
+import { useToast } from 'vue-toastification'
 
 const route = useRoute()
+const toast = useToast()
 const { getProductById } = useProductsStore()
 const productId = route.params.id
 const productsStore = useProductsStore()
@@ -23,7 +25,7 @@ const onOrderNowClicked = () => {
 const copyVoucherCode = () => {
   if (product.value?.voucherTypeName) {
     navigator.clipboard.writeText(product.value.voucherTypeName).then(() => {
-      alert('Voucher code copied to clipboard!')
+      toast.success('Voucher code copied to clipboard!')
     })
   }
 }
