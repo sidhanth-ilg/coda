@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import useProductsPaginatedList from '@/components/products/composables/useProductsPaginatedList'
 import useProductsDelete from '@/components/products/composables/useProductsDelete'
+import EmptyProducts from '@/components/products/components/EmptyProducts.vue'
 
 import ProductItem from '@/components/products/ProductItem.vue'
 
@@ -26,13 +27,16 @@ const { deleteProduct } = useProductsDelete(emit)
     </div>
   </div> -->
   <div data-testid="product-list-paginated" class="product-list-paginated">
-    <ProductItem
-      v-for="product in products"
-      :key="product.id"
-      :product="product"
-      from-paginated
-      @delete="deleteProduct"
-    />
+    <template v-if="products.length">
+      <ProductItem
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
+        from-paginated
+        @delete="deleteProduct"
+      />
+    </template>
+    <EmptyProducts v-else />
   </div>
 </template>
 <style scoped>

@@ -2,6 +2,7 @@
 import useProductsList from '@/components/products/composables/useProductsList'
 import ProductItem from '@/components/products/ProductItem.vue'
 import useProductsDelete from '@/components/products/composables/useProductsDelete'
+import EmptyProducts from '@/components/products/components/EmptyProducts.vue'
 const { deleteProduct } = useProductsDelete()
 const { products } = useProductsList()
 </script>
@@ -17,14 +18,6 @@ const { products } = useProductsList()
       />
     </template>
 
-    <p v-else class="products-list__empty-text">Sorry ! No products found.</p>
+    <EmptyProducts v-else />
   </div>
 </template>
-<style scoped>
-.products-list__empty-text {
-  color: white;
-  font-size: 1.5rem;
-  text-align: center;
-  margin-top: 2rem;
-}
-</style>
