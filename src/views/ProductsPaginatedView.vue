@@ -8,7 +8,7 @@ const { searchTerm, currentPage, totalPages, nextPage, previousPage, goToPage } 
   useProductsPaginatedList()
 const debouncedSearchTerm = ref(searchTerm.value)
 
-const onClearClicked = (): void => {
+const reset = (): void => {
   debouncedSearchTerm.value = ''
   searchTerm.value = ''
   // Reset to first page when search is cleared
@@ -42,7 +42,7 @@ watch(debouncedSearchTerm, (newValue: string) => {
           data-testid="clear-button"
           type="danger"
           :disabled="debouncedSearchTerm === ''"
-          @click="onClearClicked"
+          @click="reset"
         >
           Clear
         </CodaButton>
@@ -66,7 +66,7 @@ watch(debouncedSearchTerm, (newValue: string) => {
         </CodaButton>
       </div>
     </div>
-    <ProductsListPaginated @delete="goToPage(1)" />
+    <ProductsListPaginated @delete="reset" />
 
     <!-- Pagination Controls -->
     <div v-if="totalPages > 1" class="products-page-paginated-view__pagination-buttons">
