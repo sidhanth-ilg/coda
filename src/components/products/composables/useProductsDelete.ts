@@ -1,9 +1,11 @@
 import { useProductsStore } from '@/stores/products'
+import { useToast } from 'vue-toastification'
 
 type Emit = (event: 'delete') => void
 
 const useProductDelete = (emit?: Emit) => {
   const { removeProduct } = useProductsStore()
+  const toast = useToast()
 
   const deleteProduct = async (productId: number) => {
     //ask for confirmation
@@ -11,11 +13,11 @@ const useProductDelete = (emit?: Emit) => {
     if (confirmDelete) {
       try {
         await removeProduct(productId)
-        alert('Product deleted successfully')
+        toast.success('Product deleted successfully')
         emit?.('delete')
       } catch (error) {
         console.error('Error deleting product:', error)
-        alert('Failed to delete product')
+        toast.error('Failed to delete product')
       }
     }
   }

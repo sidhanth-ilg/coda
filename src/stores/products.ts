@@ -17,6 +17,10 @@ export const useProductsStore = defineStore('products', () => {
     products.value.push(product)
   }
   function removeProduct(productId: number): void {
+    const productIndex = products.value.findIndex((product) => product.id === productId)
+    if (productIndex === -1) {
+      throw new Error(`Product with id ${productId} not found`)
+    }
     products.value = products.value.filter((product) => product.id !== productId)
   }
 

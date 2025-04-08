@@ -5,9 +5,11 @@ import { useProductsStore } from '@/stores/products'
 import { useRoute, useRouter } from 'vue-router'
 import CodaInput from '@/components/common/CodaInput.vue'
 import CodaButton from '@/components/common/CodaButton.vue'
+import { useToast } from 'vue-toastification'
 
 const route = useRoute()
 const router = useRouter()
+const toast = useToast()
 const { addProduct, getProducts, updateProduct, getProductById } = useProductsStore()
 
 const isLoading = ref(false)
@@ -63,7 +65,7 @@ onMounted(() => {
       newProduct.value = { ...product }
     } catch (error) {
       console.error('Error loading product:', error)
-      alert('Product not found')
+      toast.error('Failed to load product data.')
       router.push({ name: isFromPaginated.value ? 'products-paginated' : 'products' })
     }
   }
@@ -73,12 +75,12 @@ const handleSubmit = () => {
   const isValid = !formFields.value.some((field) => field.required && !newProduct.value[field.id])
 
   if (!isValid) {
-    alert('Please fill in all required fields.')
+    toast.error('Please fill in all required fields.')
     return
   }
 
   if (newProduct.value.variableDenomPriceMinAmount > newProduct.value.variableDenomPriceMaxAmount) {
-    alert('Min Price should be less than Max Price.')
+    toast.error('Min price cannot be greater than max price.')
     return
   }
 
@@ -86,11 +88,11 @@ const handleSubmit = () => {
     if (isEditMode.value && productId.value) {
       // Update existing product
       updateProduct(productId.value, newProduct.value)
-      alert('Product updated successfully!')
+      toast.success('Product updated successfully!')
     } else {
       // Add new product
       addProduct(newProduct.value)
-      alert('Product created successfully!')
+      toast.success('Product created successfully!')
     }
 
     // Redirect back to products list
