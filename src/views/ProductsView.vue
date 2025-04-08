@@ -79,6 +79,12 @@ watch(debouncedSearchTerm, (newValue: string) => {
   width: 100%;
   align-items: center;
   margin-bottom: 1rem;
+  height: 4rem;
+  position: sticky;
+  top: 0;
+  background-color: #181818;
+  z-index: 10;
+  opacity: 0.9;
 }
 
 .products-view__search {
@@ -114,6 +120,8 @@ watch(debouncedSearchTerm, (newValue: string) => {
   .products-view__header {
     flex-direction: column;
     align-items: flex-start;
+    position: static;
+    height: auto;
   }
 
   .products-view__search {
