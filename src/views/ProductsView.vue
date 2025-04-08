@@ -13,7 +13,7 @@ const onClearClicked = (): void => {
 }
 
 let timeout: ReturnType<typeof setTimeout>
-watch(debouncedSearchTerm, (newValue) => {
+watch(debouncedSearchTerm, (newValue: string) => {
   clearTimeout(timeout)
   timeout = setTimeout(() => {
     searchTerm.value = newValue
