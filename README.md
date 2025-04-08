@@ -4,7 +4,7 @@ Submission of task for Coda.
 
 Features Done:
 
-1. Scroll view for the products
+1. Infinity / view for the products
 2. Edit a product
 3. Delete a product
 4. Add a product with reasonable validations for the form.
@@ -15,6 +15,12 @@ Features Done:
 9. Common components for button and input
 10. Typescript used for type safety
 11. Responsive for mobile screen and desktop
+
+## Intentional behaviour
+
+1. Create new product form has default values set in so that new products can be created quickly
+2. The project loads the products data from the .json file.Any edit and creation of new product is NOT persisted. Once you reload the application it will reset to the default products.json file. This was done with the intention of ease of testing.
+3. Added a sanitised html function to open all the anchor elements in new page. The products.json contains html that opens on the same page. This is for better UX.
 
 ## Project Setup
 
