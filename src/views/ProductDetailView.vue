@@ -11,8 +11,8 @@ const { getProductById } = useProductsStore()
 const productId = route.params.id
 const productsStore = useProductsStore()
 const product = computed(() => {
-  const product = getProductById(Number(productId))
-  if (!product) {
+  const productToFind = getProductById(Number(productId))
+  if (!productToFind) {
     return null
   }
   return productsStore.getProductById(product.id)
@@ -49,39 +49,45 @@ const testIds = computed(() => ({
         Back to Products
       </CodaButton>
     </header>
-    <img
-      v-if="product?.logoLocation"
-      class="product-detail-view__image-banner"
-      :src="product?.logoLocation"
-      alt="Product Logo"
-      :data-testid="testIds.image"
-    />
-    <h1>{{ product?.name }}</h1>
-    <p class="product-detail-view__long-description" v-html="product?.longDescription"></p>
-    <p>{{ product?.productTitle }}</p>
-    <p>{{ product?.productTagline }}</p>
+    <template v-if="product">
+      <img
+        v-if="product?.logoLocation"
+        class="product-detail-view__image-banner"
+        :src="product?.logoLocation"
+        alt="Product Logo"
+        :data-testid="testIds.image"
+      />
+      <h1>{{ product?.name }}</h1>
+      <p class="product-detail-view__long-description" v-html="product?.longDescription"></p>
+      <p>{{ product?.productTitle }}</p>
+      <p>{{ product?.productTagline }}</p>
 
-    <CodaButton
-      v-if="product?.orderUrl"
-      type="primary"
-      class="product-detail-view__order-button"
-      :disabled="!product?.orderUrl"
-      :data-testid="testIds.orderButton"
-      @click="onOrderNowClicked"
-    >
-      Order Now
-    </CodaButton>
-
-    <div>
-      Use discount voucher code:
-      <div
-        :data-testid="testIds.voucherCode"
-        class="product-detail-view__voucher-code"
-        @click="copyVoucherCode"
+      <CodaButton
+        v-if="product?.orderUrl"
+        type="primary"
+        class="product-detail-view__order-button"
+        :disabled="!product?.orderUrl"
+        :data-testid="testIds.orderButton"
+        @click="onOrderNowClicked"
       >
-        {{ product?.voucherTypeName }}
+        Order Now
+      </CodaButton>
+
+      <div>
+        Use discount voucher code:
+        <div
+          :data-testid="testIds.voucherCode"
+          class="product-detail-view__voucher-code"
+          @click="copyVoucherCode"
+        >
+          {{ product?.voucherTypeName }}
+        </div>
       </div>
-    </div>
+    </template>
+
+    <template v-else>
+      <p>Product not found.</p>
+    </template>
   </div>
 </template>
 <style scoped>
