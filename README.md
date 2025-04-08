@@ -2,6 +2,8 @@
 
 Submission of task for Coda.
 
+Deployed here - https://coda-nine.vercel.app/
+
 Features Done:
 
 1. Infinity / view for the products
