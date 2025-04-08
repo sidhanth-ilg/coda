@@ -16,9 +16,8 @@ const { products } = useProductsList()
         @delete="deleteProduct"
       />
     </template>
-    <div v-else>
-      <p class="products-list__empty-text">Sorry ! No products found.</p>
-    </div>
+
+    <p v-else class="products-list__empty-text">Sorry ! No products found.</p>
   </div>
 </template>
 <style scoped>

@@ -17,8 +17,6 @@ const product = computed(() => {
 })
 
 const onOrderNowClicked = () => {
-  // Handle order now action
-  // This could be a redirect to the order URL or any other action
   window.open(product.value?.orderUrl, '_blank')
 }
 

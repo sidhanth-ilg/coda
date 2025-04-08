@@ -9,8 +9,6 @@ const useProductsList = () => {
   const productsStore = useProductsStore()
   const products = storeToRefs(productsStore).getProducts
 
-  //Data
-
   const filteredProducts = computed(() => {
     return productsStore.products.filter((product: Product) => {
       if (!searchTerm.value) {

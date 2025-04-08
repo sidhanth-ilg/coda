@@ -14,7 +14,6 @@ const { addProduct, getProducts, updateProduct, getProductById } = useProductsSt
 
 const isLoading = ref(false)
 
-// Check if we're in edit mode
 const isEditMode = ref(route.query.edit === 'true')
 const productId = ref(route.query.id ? parseInt(route.query.id as string) : null)
 const isFromPaginated = ref(route.query.fromPaginated === 'true')

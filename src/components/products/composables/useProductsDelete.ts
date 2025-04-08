@@ -8,7 +8,6 @@ const useProductDelete = (emit?: Emit) => {
   const toast = useToast()
 
   const deleteProduct = async (productId: number) => {
-    //ask for confirmation
     const confirmDelete = window.confirm('Are you sure you want to delete this product?')
     if (confirmDelete) {
       try {
