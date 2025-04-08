@@ -72,7 +72,7 @@ watch(debouncedSearchTerm, (newValue) => {
         Previous
       </CodaButton>
 
-      <div class="pagination__info">Page {{ currentPage }} of {{ totalPages }}</div>
+      <div class="pagination__info">{{ currentPage }} of {{ totalPages }}</div>
       <CodaButton
         class="pagination__button"
         :disabled="currentPage === totalPages"
@@ -227,6 +227,12 @@ watch(debouncedSearchTerm, (newValue) => {
     margin: 0;
     margin-top: 1rem;
     width: 100%;
+  }
+
+  .pagination__info {
+    font-size: 0.875rem;
+    font-weight: light;
+    padding: 0;
   }
 }
 </style>
