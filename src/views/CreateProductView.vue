@@ -70,7 +70,7 @@ onMounted(() => {
 })
 
 const handleSubmit = () => {
-  let isValid = !formFields.value.some((field) => field.required && !newProduct.value[field.id])
+  const isValid = !formFields.value.some((field) => field.required && !newProduct.value[field.id])
 
   if (!isValid) {
     alert('Please fill in all required fields.')
@@ -117,12 +117,12 @@ const handleCancel = () => {
 <template>
   <div class="create-product-view">
     <h1>{{ isEditMode ? 'Edit Product' : 'Create Product' }}</h1>
-    <form @submit.prevent="handleSubmit" class="create-product-view__form">
+    <form class="create-product-view__form" @submit.prevent="handleSubmit">
       <CodaInput
         v-for="field in formFields"
-        v-model.trim="newProduct[field.id]"
-        :key="field.id"
         :id="field.id"
+        :key="field.id"
+        v-model.trim="newProduct[field.id]"
         :label="field.label"
         :type="field.type"
         :required="field.required"

@@ -39,6 +39,16 @@ const testIds = computed(() => ({
 </script>
 <template>
   <div class="product-detail-view">
+    <header>
+      <CodaButton
+        class="product-detail-view__back-button"
+        type="primary"
+        :data-testid="testIds.container"
+        @click="$router.go(-1)"
+      >
+        Back to Products
+      </CodaButton>
+    </header>
     <img
       v-if="product?.logoLocation"
       class="product-detail-view__image-banner"
@@ -78,6 +88,10 @@ const testIds = computed(() => ({
 .product-detail-view {
   margin-bottom: 8rem;
   color: white;
+}
+
+.product-detail-view__back-button {
+  margin: 1rem 0;
 }
 .product-detail-view__image-banner {
   width: 100%;
