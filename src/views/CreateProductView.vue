@@ -77,6 +77,11 @@ const handleSubmit = () => {
     return
   }
 
+  if (newProduct.value.variableDenomPriceMinAmount > newProduct.value.variableDenomPriceMaxAmount) {
+    alert('Min Price should be less than Max Price.')
+    return
+  }
+
   try {
     if (isEditMode.value && productId.value) {
       // Update existing product
