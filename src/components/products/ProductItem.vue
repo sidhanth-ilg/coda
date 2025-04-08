@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 import { computed } from 'vue'
 import { sanitizeHtml } from '@/utilities/util'
 import CodaButton from '@/components/common/CodaButton.vue'
+import trashSVG from '@/assets/trash.svg'
 
 const router = useRouter()
 
@@ -11,6 +12,12 @@ type Props = {
   product: Pick<Product, 'id' | 'name' | 'shortDescription' | 'productTitle'>
   fromPaginated?: boolean
 }
+
+type Emits = {
+  delete: [id: number]
+}
+
+const emit = defineEmits<Emits>()
 
 const props = defineProps<Props>()
 const onProductClicked = (id: number) => {
@@ -54,6 +61,15 @@ const testIds = computed(() => ({
       <CodaButton :data-testid="testIds.editButton" @click="onEditProductClicked(product.id)">
         Edit Product
       </CodaButton>
+
+      <img
+        class="product-item__delete-icon"
+        :src="trashSVG"
+        alt="Delete Product"
+        @click="emit('delete', product.id)"
+      />
+
+      <!-- <CodaButton type="danger" @click="emit('delete', product.id)"> Delete Product </CodaButton> -->
     </div>
   </div>
 </template>
@@ -80,10 +96,21 @@ const testIds = computed(() => ({
   position: absolute;
   right: 1rem;
   bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 .product-item__view-button {
   margin-right: 1rem;
+}
+
+.product-item__delete-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+  margin-left: 1rem;
 }
 
 @media screen and (max-width: 768px) {

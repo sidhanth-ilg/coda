@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import useProductsList from '@/components/products/composables/useProductsPaginatedList'
+import useProductsDelete from '@/components/products/composables/useProductsDelete'
 import ProductItem from '@/components/products/ProductItem.vue'
 //import { useVirtualList } from '@vueuse/core'
 
 const { products } = useProductsList()
+const { deleteProduct } = useProductsDelete()
 
 // const { list, containerProps, wrapperProps } = useVirtualList(products, {
 //   itemHeight: 384,
@@ -18,7 +20,13 @@ const { products } = useProductsList()
     </div>
   </div> -->
   <div data-testid="product-list-paginated" class="product-list-paginated">
-    <ProductItem v-for="product in products" :key="product.id" :product="product" from-paginated />
+    <ProductItem
+      v-for="product in products"
+      :key="product.id"
+      :product="product"
+      from-paginated
+      @delete="deleteProduct"
+    />
   </div>
 </template>
 <style scoped>
