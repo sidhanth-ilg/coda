@@ -8,7 +8,7 @@ import CodaButton from '@/components/common/CodaButton.vue'
 
 const route = useRoute()
 const router = useRouter()
-const { addProduct, getProducts, updateProduct, getProductById, removeProduct } = useProductsStore()
+const { addProduct, getProducts, updateProduct, getProductById } = useProductsStore()
 
 const isLoading = ref(false)
 
@@ -96,22 +96,6 @@ const handleSubmit = () => {
   }
 }
 
-const handleDelete = async () => {
-  if (isEditMode.value && productId.value) {
-    const confirmDelete = confirm('Are you sure you want to delete this product?')
-    if (confirmDelete) {
-      try {
-        removeProduct(productId.value)
-        alert('Product deleted successfully!')
-        router.push({ name: isFromPaginated.value ? 'products-paginated' : 'products' })
-      } catch (error) {
-        console.error('Error deleting product:', error)
-        alert('Failed to delete product.')
-      }
-    }
-  }
-}
-
 watch(
   newProduct,
   (newValue) => {
@@ -155,16 +139,6 @@ const handleCancel = () => {
         >
           {{ isEditMode ? 'Update Product' : 'Create Product' }}
         </CodaButton>
-        <!-- Delete product-->
-        <CodaButton
-          type="danger"
-          :disabled="isLoading"
-          data-testid="delete-product-button"
-          class="create-product-view__delete-button"
-          @click="handleDelete"
-        >
-          Delete Product
-        </CodaButton>
         <CodaButton
           type="danger"
           :disabled="isLoading"
@@ -199,5 +173,17 @@ const handleCancel = () => {
 
 .create-product-view__form {
   width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .create-product-view__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .create-product-view__back-button {
+    margin: 0;
+  }
 }
 </style>
