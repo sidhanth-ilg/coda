@@ -33,8 +33,11 @@ export const useProductsStore = defineStore('products', () => {
     }
   }
 
-  const getProductById = (id: number): Product | undefined => {
+  const getProductById = (id: number): Product => {
     const product = products.value.find((product) => product.id === id)
+    if (!product) {
+      throw new Error(`Product with id ${id} not found`)
+    }
     return product
   }
 

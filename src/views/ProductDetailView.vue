@@ -11,8 +11,8 @@ const { getProductById } = useProductsStore()
 const productId = route.params.id
 const productsStore = useProductsStore()
 const product = computed(() => {
-  const productToFind = getProductById(Number(productId))
-  if (!productToFind) {
+  const product = getProductById(Number(productId))
+  if (!product) {
     return null
   }
   return productsStore.getProductById(product.id)
