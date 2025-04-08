@@ -1,6 +1,8 @@
 import { useProductsStore } from '@/stores/products'
 
-const useProductDelete = () => {
+type Emit = (event: 'delete') => void
+
+const useProductDelete = (emit?: Emit) => {
   const { removeProduct } = useProductsStore()
 
   const deleteProduct = async (productId: number) => {
@@ -10,6 +12,7 @@ const useProductDelete = () => {
       try {
         await removeProduct(productId)
         alert('Product deleted successfully')
+        emit?.('delete')
       } catch (error) {
         console.error('Error deleting product:', error)
         alert('Failed to delete product')

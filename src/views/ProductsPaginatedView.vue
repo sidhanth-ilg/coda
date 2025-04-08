@@ -65,7 +65,7 @@ watch(debouncedSearchTerm, (newValue: string) => {
         </CodaButton>
       </div>
     </div>
-    <ProductsListPaginated />
+    <ProductsListPaginated @delete="goToPage(1)" />
 
     <!-- Pagination Controls -->
     <div v-if="totalPages > 1" class="products-page-paginated-view__pagination-buttons">
