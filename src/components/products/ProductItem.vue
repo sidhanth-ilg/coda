@@ -66,10 +66,9 @@ const testIds = computed(() => ({
         class="product-item__delete-icon"
         :src="trashSVG"
         alt="Delete Product"
+        :data-testid="`delete-product-button-${product.id}`"
         @click="emit('delete', product.id)"
       />
-
-      <!-- <CodaButton type="danger" @click="emit('delete', product.id)"> Delete Product </CodaButton> -->
     </div>
   </div>
 </template>

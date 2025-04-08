@@ -29,4 +29,19 @@ describe('Product List Page', () => {
       'Game of Sultans  (Canada) - Codashop',
     )
   })
+
+  it('should delete a product successfully', () => {
+    // Visit edit page of product 1679
+    cy.visit('/')
+
+    // Click delete button and handle confirmation
+    cy.get('[data-testid="delete-product-button-1679"]').click()
+    cy.on('window:confirm', () => true)
+
+    // Verify redirect to products page
+    cy.url().should('include', '/')
+
+    // Verify product is deleted
+    cy.get('[data-testid="product-item-1679"]').should('not.exist')
+  })
 })
