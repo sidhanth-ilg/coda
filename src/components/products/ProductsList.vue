@@ -8,7 +8,7 @@ const { products } = useProductsList()
 </script>
 
 <template>
-  <div data-testid="product-list">
+  <div data-testid="product-list" class="product-list">
     <template v-if="products.length">
       <ProductItem
         v-for="product in products"
@@ -21,3 +21,8 @@ const { products } = useProductsList()
     <EmptyProducts v-else />
   </div>
 </template>
+<style scoped>
+.product-list {
+  width: 100%;
+}
+</style>
