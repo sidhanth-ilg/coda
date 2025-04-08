@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import useProductsList from '@/components/products/composables/useProductsPaginatedList'
+import useProductsPaginatedList from '@/components/products/composables/useProductsPaginatedList'
 import useProductsDelete from '@/components/products/composables/useProductsDelete'
 
 import ProductItem from '@/components/products/ProductItem.vue'
@@ -10,7 +10,7 @@ export type PaginatedListEmits = {
 }
 
 const emit = defineEmits<PaginatedListEmits>()
-const { products } = useProductsList()
+const { products } = useProductsPaginatedList()
 const { deleteProduct } = useProductsDelete(emit)
 
 // const { list, containerProps, wrapperProps } = useVirtualList(products, {

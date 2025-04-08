@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import CodaButton from '@/components/common/CodaButton.vue'
 import ProductsListPaginated from '@/components/products/ProductsListPaginated.vue'
-import useProductsList from '@/components/products/composables/useProductsPaginatedList.ts'
+import useProductsPaginatedList from '@/components/products/composables/useProductsPaginatedList.ts'
 import { ref, watch } from 'vue'
 
-const { searchTerm, currentPage, totalPages, nextPage, previousPage, goToPage } = useProductsList()
+const { searchTerm, currentPage, totalPages, nextPage, previousPage, goToPage } =
+  useProductsPaginatedList()
 const debouncedSearchTerm = ref(searchTerm.value)
 
 const onClearClicked = (): void => {

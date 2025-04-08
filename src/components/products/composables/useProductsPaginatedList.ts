@@ -1,17 +1,19 @@
 import { useProductsStore } from '@/stores/products'
 import { computed, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 import type { Product } from '@/types/product'
 
 const searchTerm = ref('')
 const currentPage = ref(1)
 const itemsPerPage = ref(2) // Number of items to display per page
 
-const useProductsList = () => {
+const useProductsPaginatedList = () => {
   const productsStore = useProductsStore()
+  const products = storeToRefs(productsStore).getProducts
 
   // Filter products based on search term
   const filteredProducts = computed(() => {
-    return productsStore.products.filter((product: Product) => {
+    return products.value.filter((product: Product) => {
       if (!searchTerm.value) {
         return true
       }
@@ -72,4 +74,4 @@ const useProductsList = () => {
   }
 }
 
-export default useProductsList
+export default useProductsPaginatedList
