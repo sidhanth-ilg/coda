@@ -40,6 +40,7 @@ watch(debouncedSearchTerm, (newValue: string) => {
           class="products-view__clear-button"
           data-testid="clear-button"
           type="danger"
+          :disabled="debouncedSearchTerm === ''"
           @click="onClearClicked"
         >
           Clear
@@ -67,14 +68,20 @@ watch(debouncedSearchTerm, (newValue: string) => {
     <ProductsListPaginated />
 
     <!-- Pagination Controls -->
-    <div v-if="totalPages > 1" class="pagination">
-      <CodaButton class="pagination__button" :disabled="currentPage === 1" @click="previousPage">
+    <div v-if="totalPages > 1" class="products-page-paginated-view__pagination-buttons">
+      <CodaButton
+        class="products-page-paginated-view__paginate-button"
+        :disabled="currentPage === 1"
+        @click="previousPage"
+      >
         Previous
       </CodaButton>
 
-      <div class="pagination__info">{{ currentPage }} of {{ totalPages }}</div>
+      <div class="products-page-paginated-view__pagination-info">
+        {{ currentPage }} of {{ totalPages }}
+      </div>
       <CodaButton
-        class="pagination__button"
+        class="products-page-paginated-view__paginate-button"
         :disabled="currentPage === totalPages"
         label="Next"
         @click="nextPage"
@@ -146,7 +153,7 @@ watch(debouncedSearchTerm, (newValue: string) => {
   width: 50%;
 }
 
-.pagination {
+.products-page-paginated-view__pagination-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -155,7 +162,7 @@ watch(debouncedSearchTerm, (newValue: string) => {
   gap: 1rem;
 }
 
-.pagination__button {
+.products-page-paginated-view__paginate-button {
   background-color: #007bff;
   color: white;
   border: none;
@@ -165,12 +172,7 @@ watch(debouncedSearchTerm, (newValue: string) => {
   font-size: 1rem;
 }
 
-.pagination__button:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.pagination__info {
+.products-page-paginated-view__pagination-info {
   font-size: 1rem;
   font-weight: bold;
   padding: 0.5rem 1rem;
@@ -208,13 +210,13 @@ watch(debouncedSearchTerm, (newValue: string) => {
     width: 100%;
   }
 
-  .pagination {
+  .products-page-paginated-view__pagination-buttons {
     flex-direction: row;
     width: 100%;
     padding: 0 1rem;
   }
 
-  .pagination__button {
+  .products-page-paginated-view__paginate-button {
     flex: 1;
   }
 
@@ -229,7 +231,7 @@ watch(debouncedSearchTerm, (newValue: string) => {
     width: 100%;
   }
 
-  .pagination__info {
+  .products-page-paginated-view__pagination-info {
     font-size: 0.875rem;
     font-weight: light;
     padding: 0;

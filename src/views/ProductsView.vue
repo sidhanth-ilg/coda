@@ -36,6 +36,7 @@ watch(debouncedSearchTerm, (newValue: string) => {
           class="products-view__clear-button"
           data-testid="clear-button"
           type="danger"
+          :disabled="debouncedSearchTerm === ''"
           @click="onClearClicked"
         >
           Clear

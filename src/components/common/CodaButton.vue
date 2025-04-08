@@ -55,4 +55,9 @@ const emit = defineEmits<Emits>()
   background-color: #ffc107;
   color: black;
 }
+
+.coda-button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
 </style>
