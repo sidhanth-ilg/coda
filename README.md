@@ -23,6 +23,7 @@ Features Done:
 1. Create new product form has default values set in so that new products can be created quickly
 2. The project loads the products data from the .json file.Any edit and creation of new product is NOT persisted. Once you reload the application it will reset to the default products.json file. This was done with the intention of ease of testing.
 3. Added a sanitised html function to open all the anchor elements in new page. The products.json contains html that opens on the same page. This is for better UX.
+4. Used a third-party toast library for notifications to prioritize core functionality implementation.
 
 ## Project Setup
 
